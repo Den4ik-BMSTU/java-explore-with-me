@@ -1,4 +1,4 @@
-package ru.practicum.User;
+package ru.practicum.Category;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,13 +12,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
+public class CategoryDto {
     Long id;
+
     @NotNull
     @NotBlank(message = "Ошибка: name пустое или содержит только пробелы")
     String name;
-    @NotNull
-    @NotBlank(message = "Ошибка: email пустое или содержит только пробелы")
-    @Email(message = "Неверные данные: ошибка в записи email")
-    String email;
 }
