@@ -1,6 +1,4 @@
-package ru.practicum;
-
-import org.springframework.web.bind.annotation.RequestParam;
+package ru.practicum.User;
 
 import java.util.List;
 

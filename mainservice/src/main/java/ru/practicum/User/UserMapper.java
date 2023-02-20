@@ -1,4 +1,4 @@
-package ru.practicum;
+package ru.practicum.User;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
