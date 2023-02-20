@@ -23,14 +23,14 @@ public class StatsController {
                                     @RequestParam(value = "end") String end,
                                     @RequestParam(value = "uris") List<String> uris,
                                     @RequestParam(value = "unique", defaultValue = "false") boolean unique) {
-        log.info("Получили всю статистику");
+        log.info("Собрали всю статистику");
         return statsService.getStats(start, end, uris, unique);
     }
 
     @PostMapping(path = "/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public EndpointHitDto saveHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
-        log.info("Сохранили запрос");
+        log.info("Сохранили информацию");
         return statsService.saveHit(endpointHitDto);
     }
 }
