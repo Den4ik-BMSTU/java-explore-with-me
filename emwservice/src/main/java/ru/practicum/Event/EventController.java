@@ -49,7 +49,7 @@ public class EventController {
 
     @GetMapping("/users/{userId}/events")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventFullDto> getAllEventsByUserId(@PathVariable("userId") long userId,
+    public List<EventFullDto> getAllEventsOfOwner(@PathVariable("userId") long userId,
                                                    @RequestParam(value = "from", defaultValue = "0") long from,
                                                    @RequestParam(value = "size", defaultValue = "10") long size) {
         if (from < 0) {
@@ -61,22 +61,22 @@ public class EventController {
             throw new IncorrectParameterException("Неверный параметр size: {}, size должен быть больше или равен 0 " + size);
         }
         log.info("События найдены");
-        return eventService.getAllEventsByUserId(userId, from, size);
+        return eventService.getAllEventsOfOwner(userId, from, size);
     }
 
     @GetMapping("/users/{userId}/events/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto getEventByIdAndByUserId(@PathVariable("userId") long userId,
+    public EventFullDto getEventOfOwnerByEventId(@PathVariable("userId") long userId,
                                                 @PathVariable("eventId") long eventId) {
         log.info("Событие найдено");
-        return eventService.getEventByIdAndByUserId(userId, eventId);
+        return eventService.getEventOfOwnerByEventId(userId, eventId);
     }
 
     @GetMapping("/admin/events")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventFullDto> getAllEventsAdmin(@RequestParam(value = "userIds", required = false) List<Long> userIds,
+    public List<EventFullDto> getAllEventsAdmin(@RequestParam(value = "userIds", defaultValue = "0") List<Long> userIds,
                                                 @RequestParam(value = "states", required = false) List<String> states,
-                                                @RequestParam(value = "categories", required = false) List<Long> categories,
+                                                @RequestParam(value = "categories", defaultValue = "0") List<Long> categories,
                                                 @RequestParam(value = "rangeStart") String rangeStart,
                                                 @RequestParam(value = "rangeEnd") String rangeEnd,
                                                 @RequestParam(value = "from", defaultValue = "0") long from,

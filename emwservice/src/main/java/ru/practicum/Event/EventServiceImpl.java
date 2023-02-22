@@ -3,9 +3,6 @@ package ru.practicum.Event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +11,15 @@ import ru.practicum.User.UserMapper;
 import ru.practicum.User.UserRepository;
 import ru.practicum.exceptions.ConflictException;
 import ru.practicum.exceptions.NotFoundException;
+import ru.practicum.State.StateEnum;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.Objects;
 
 
 @Service
@@ -37,100 +38,57 @@ public class EventServiceImpl implements EventService {
                                            String rangeEnd, boolean onlyAvailable, String sort, long from, long size) {
         List<Event> events = new ArrayList<>();
         String state = StateEnum.PUBLISHED.toString();
-        if (rangeStart != null && rangeEnd != null){
+        if (rangeStart.equals("") && rangeEnd.equals("")) {
+            if (onlyAvailable == true) {
+                for (Long category : categories) {
+                    for (Event event : repository.findEventsAvailablePaidByCategoryId(LocalDateTime.now(),
+                            category, paid, state)) {
+                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
+                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
+                            events.add(event);
+                        }
+                    }
+                }
+            } else {
+                for (Long category : categories) {
+                    for (Event event : repository.findEventsPaidByCategoryId(LocalDateTime.now(),
+                            category, paid, state)) {
+                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
+                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
+                            events.add(event);
+                        }
+                    }
+                }
+            }
+        } else {
             LocalDateTime start = EventMapper.stringToLocalDateTime(rangeStart);
             LocalDateTime end = EventMapper.stringToLocalDateTime(rangeEnd);
-            if (onlyAvailable == true){
-                if (sort.equals("EVENT_DATE")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsAvailablePaidInRangeByCategoryIdSortByEventDate(start, end, category,
-                                paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
-                        }
-                    }
-                } else if (sort.equals("VIEWS")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsAvailablePaidInRangeByCategoryIdSortByViews(start, end, category,
-                                paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
+            if (onlyAvailable == true) {
+                for (Long category : categories) {
+                    for (Event event : repository.findEventsAvailablePaidInRangeByCategoryId(start, end, category,
+                            paid, state)) {
+                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
+                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
+                            events.add(event);
                         }
                     }
                 }
             } else {
-                if (sort.equals("EVENT_DATE")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsPaidInRangeByCategoryIdSortByEventDate(start, end, category,
-                                paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
-                        }
-                    }
-                } else if (sort.equals("VIEWS")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsPaidInRangeByCategoryIdSortByViews(start, end, category,
-                                paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
+                for (Long category : categories) {
+                    for (Event event : repository.findEventsPaidInRangeByCategoryId(start, end, category,
+                            paid, state)) {
+                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
+                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
+                            events.add(event);
                         }
                     }
                 }
             }
-        } else if (rangeStart == null && rangeEnd == null){
-            if (onlyAvailable == true){
-                if (sort.equals("EVENT_DATE")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsAvailablePaidByCategoryIdSortByEventDate(LocalDateTime.now(),
-                                category, paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
-                        }
-                    }
-                } else if (sort.equals("VIEWS")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsAvailablePaidByCategoryIdSortByViews(LocalDateTime.now(),
-                                category, paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
-                        }
-                    }
-                }
-            } else {
-                if (sort.equals("EVENT_DATE")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsPaidByCategoryIdSortByEventDate(LocalDateTime.now(),
-                                category, paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
-                        }
-                    }
-                } else if (sort.equals("VIEWS")){
-                    for (Long category : categories) {
-                        for (Event event : repository.findEventsPaidByCategoryIdSortByViews(LocalDateTime.now(),
-                                category, paid, state)) {
-                            if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                    || event.getDescription().toLowerCase().contains(text.toLowerCase())){
-                                events.add(event);
-                            }
-                        }
-                    }
-                }
-            }
+        }
+        if (sort.equals("EVENT_DATE")) {
+            events.sort(Comparator.comparing(Event::getEventDate));
+        } else if (sort.equals("VIEWS")) {
+            events.sort(Comparator.comparing(Event::getViews).reversed());
         }
         return events.stream()
                 .skip(from)
@@ -148,7 +106,12 @@ public class EventServiceImpl implements EventService {
             views++;
             String sqlUpdate = "UPDATE events SET views = ? WHERE id = ?";
             jdbcTemplate.update(sqlUpdate, views, id);
-            return toFullEventDtoAbsolutely(repository.findEventById(id));
+            String sql = "SELECT * FROM events WHERE id = ?";
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
+            rowSet.next();
+            Event event = repository.findEventById(id);
+            event.setViews(rowSet.getLong("views"));
+            return toFullEventDtoAbsolutely(event);
         } else {
             log.error("Можно найти только опубликованное событие");
             throw new NotFoundException("Можно найти только опубликованное событие");
@@ -156,7 +119,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventFullDto> getAllEventsByUserId(long userId, long from, long size) {
+    public List<EventFullDto> getAllEventsOfOwner(long userId, long from, long size) {
         userValid(userId);
         return repository.findEventsByUserId(userId).stream()
                 .skip(from)
@@ -166,7 +129,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventFullDto getEventByIdAndByUserId(long userId, long eventId) {
+    public EventFullDto getEventOfOwnerByEventId(long userId, long eventId) {
         userValid(userId);
         eventValid(eventId);
         return toFullEventDtoAbsolutely(repository.findEventByIdAndByUserId(eventId, userId));
@@ -231,7 +194,7 @@ public class EventServiceImpl implements EventService {
         Event event = EventMapper.toEvent(eventNewDto, 0L, LocalDateTime.now(), userId, LocalDateTime.now(),
                 StateEnum.PENDING.toString(), 0L);
         repository.save(event);
-        EventFullDto eventFullDto = EventMapper.toFullEventDto(event,
+        EventFullDto eventFullDto = EventMapper.toEventFullDto(event,
                 CategoryMapper.toCategoryDto(categoryRepository.getById(eventNewDto.getCategory())),
                 UserMapper.toUserDto(userRepository.getById(userId)));
         return eventFullDto;
@@ -273,10 +236,10 @@ public class EventServiceImpl implements EventService {
         }
         saveOldVariablesExceptNull(event, eventNewDtoForUpdate);
         String state = "";
-        if (eventNewDtoForUpdate.getStateAction().equals(StateActionEnum.PUBLISH_EVENT.toString())) {
+        if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.PUBLISH_EVENT.toString())) {
             state = StateEnum.PUBLISHED.toString();
         }
-        if (eventNewDtoForUpdate.getStateAction().equals(StateActionEnum.CANCEL_EVENT.toString())) {
+        if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.CANCEL_EVENT.toString())) {
             state = StateEnum.CANCELED.toString();
         }
         long userId = event.getInitiatorId();
@@ -315,7 +278,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private EventFullDto toFullEventDtoAbsolutely(Event event) {
-        return EventMapper.toFullEventDto(event,
+        return EventMapper.toEventFullDto(event,
                 CategoryMapper.toCategoryDto(categoryRepository.getById(event.getCategory())),
                 UserMapper.toUserDto(userRepository.getById(event.getInitiatorId())));
     }

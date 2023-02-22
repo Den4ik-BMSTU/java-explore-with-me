@@ -8,9 +8,9 @@ public interface EventService {
 
     EventFullDto getEventById(long id);
 
-    List<EventFullDto> getAllEventsByUserId(long userId, long from, long size);
+    List<EventFullDto> getAllEventsOfOwner(long userId, long from, long size);
 
-    EventFullDto getEventByIdAndByUserId(long userId, long eventId);
+    EventFullDto getEventOfOwnerByEventId(long userId, long eventId);
 
     List<EventFullDto> getAllEventsAdmin(List<Long> userIds, List<String> states, List<Long> categories, String rangeStart,
                                          String rangeEnd, long from, long size);

@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EventMapper {
 
-    public static EventFullDto toFullEventDto(Event event, CategoryDto categoryDto, UserDto userDto) {
+    public static EventFullDto toEventFullDto (Event event, CategoryDto categoryDto, UserDto userDto) {
         EventFullDto eventFullDto = new EventFullDto();
         eventFullDto.setId(event.getId());
         eventFullDto.setAnnotation(event.getAnnotation());

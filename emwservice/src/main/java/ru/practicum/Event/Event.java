@@ -2,9 +2,6 @@ package ru.practicum.Event;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.Category.CategoryDto;
-import ru.practicum.User.UserDto;
-import ru.practicum.Category.Category;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
