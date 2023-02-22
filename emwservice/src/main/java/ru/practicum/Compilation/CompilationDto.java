@@ -21,5 +21,7 @@ public class CompilationDto {
 
     Boolean pinned;
 
+    @NotNull
+    @NotBlank(message = "Ошибка: title пустое или содержит только пробелы")
     String title;
 }

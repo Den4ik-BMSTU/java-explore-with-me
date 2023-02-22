@@ -19,13 +19,13 @@ public class EventController {
 
     @GetMapping("/events")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventFullDto> getAllEvents(@RequestParam(value = "text") String text,
-                                           @RequestParam(value = "categories") List<Long> categories,
-                                           @RequestParam(value = "paid") boolean paid,
+    public List<EventFullDto> getAllEvents(@RequestParam(value = "text", required = false) String text,
+                                           @RequestParam(value = "categories", required = false) List<Long> categories,
+                                           @RequestParam(value = "paid", required = false) boolean paid,
                                            @RequestParam(value = "rangeStart", required = false) String rangeStart,
                                            @RequestParam(value = "rangeEnd", required = false) String rangeEnd,
-                                           @RequestParam(value = "onlyAvailable", defaultValue = "false") boolean onlyAvailable,
-                                           @RequestParam(value = "sort") String sort,
+                                           @RequestParam(value = "onlyAvailable", required = false) boolean onlyAvailable,
+                                           @RequestParam(value = "sort", required = false) String sort,
                                            @RequestParam(value = "from", defaultValue = "0") long from,
                                            @RequestParam(value = "size", defaultValue = "10") long size) {
         if (from < 0) {
@@ -74,11 +74,11 @@ public class EventController {
 
     @GetMapping("/admin/events")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventFullDto> getAllEventsAdmin(@RequestParam(value = "userIds", defaultValue = "0") List<Long> userIds,
+    public List<EventFullDto> getAllEventsAdmin(@RequestParam(value = "users", required = false) List<Long> users,
                                                 @RequestParam(value = "states", required = false) List<String> states,
-                                                @RequestParam(value = "categories", defaultValue = "0") List<Long> categories,
-                                                @RequestParam(value = "rangeStart") String rangeStart,
-                                                @RequestParam(value = "rangeEnd") String rangeEnd,
+                                                @RequestParam(value = "categories", required = false) List<Long> categories,
+                                                @RequestParam(value = "rangeStart", required = false) String rangeStart,
+                                                @RequestParam(value = "rangeEnd", required = false) String rangeEnd,
                                                 @RequestParam(value = "from", defaultValue = "0") long from,
                                                 @RequestParam(value = "size", defaultValue = "10") long size) {
         if (from < 0) {
@@ -90,7 +90,7 @@ public class EventController {
             throw new IncorrectParameterException("Неверный параметр size: {}, size должен быть больше или равен 0 " + size);
         }
         log.info("События найдены");
-        return eventService.getAllEventsAdmin(userIds, states, categories, rangeStart, rangeEnd, from, size);
+        return eventService.getAllEventsAdmin(users, states, categories, rangeStart, rangeEnd, from, size);
     }
 
     @PostMapping("/users/{userId}/events")

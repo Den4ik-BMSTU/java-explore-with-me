@@ -38,57 +38,27 @@ public class EventServiceImpl implements EventService {
                                            String rangeEnd, boolean onlyAvailable, String sort, long from, long size) {
         List<Event> events = new ArrayList<>();
         String state = StateEnum.PUBLISHED.toString();
-        if (rangeStart.equals("") && rangeEnd.equals("")) {
-            if (onlyAvailable == true) {
-                for (Long category : categories) {
-                    for (Event event : repository.findEventsAvailablePaidByCategoryId(LocalDateTime.now(),
-                            category, paid, state)) {
-                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
-                            events.add(event);
-                        }
-                    }
-                }
-            } else {
-                for (Long category : categories) {
-                    for (Event event : repository.findEventsPaidByCategoryId(LocalDateTime.now(),
-                            category, paid, state)) {
-                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
-                            events.add(event);
-                        }
-                    }
-                }
-            }
+        if ((text == null || text.isEmpty()) || (categories == null || categories.isEmpty()) || rangeStart == null ||
+                rangeEnd == null || sort == null){
+            events.addAll(repository.findAll().stream()
+                    .filter(a -> a.getState().equals(state))
+                    .collect(Collectors.toList()));
         } else {
             LocalDateTime start = EventMapper.stringToLocalDateTime(rangeStart);
             LocalDateTime end = EventMapper.stringToLocalDateTime(rangeEnd);
-            if (onlyAvailable == true) {
-                for (Long category : categories) {
-                    for (Event event : repository.findEventsAvailablePaidInRangeByCategoryId(start, end, category,
-                            paid, state)) {
-                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
-                            events.add(event);
-                        }
-                    }
-                }
-            } else {
-                for (Long category : categories) {
-                    for (Event event : repository.findEventsPaidInRangeByCategoryId(start, end, category,
-                            paid, state)) {
-                        if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
-                                || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
-                            events.add(event);
-                        }
+            for (Long category : categories) {
+                for (Event event : repository.findEventsPublishedByParameters(start, end, category, paid, state)) {
+                    if (event.getAnnotation().toLowerCase().contains(text.toLowerCase())
+                            || event.getDescription().toLowerCase().contains(text.toLowerCase())) {
+                        events.add(event);
                     }
                 }
             }
-        }
-        if (sort.equals("EVENT_DATE")) {
-            events.sort(Comparator.comparing(Event::getEventDate));
-        } else if (sort.equals("VIEWS")) {
-            events.sort(Comparator.comparing(Event::getViews).reversed());
+            if (sort.equals("EVENT_DATE")) {
+                events.sort(Comparator.comparing(Event::getEventDate));
+            } else if (sort.equals("VIEWS")) {
+                events.sort(Comparator.comparing(Event::getViews).reversed());
+            }
         }
         return events.stream()
                 .skip(from)
@@ -136,47 +106,20 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventFullDto> getAllEventsAdmin(List<Long> userIds, List<String> states, List<Long> categories,
+    public List<EventFullDto> getAllEventsAdmin(List<Long> users, List<String> states, List<Long> categories,
                                                 String rangeStart, String rangeEnd, long from, long size) {
-        LocalDateTime start = EventMapper.stringToLocalDateTime(rangeStart);
-        LocalDateTime end = EventMapper.stringToLocalDateTime(rangeEnd);
         List<Event> events = new ArrayList<>();
-        if (states.size() == 0) {
-            for (Long category : categories) {
-                for (Long userId : userIds) {
-                    events.addAll(repository.findEventsInRangeByCategoryIdByUserId(start, end, category, userId));
-                }
-            }
-        } else if (userIds.size() == 0) {
+        if ((states == null || states.isEmpty()) || (categories == null || categories.isEmpty())
+                || (users == null || users.isEmpty() || rangeStart == null || rangeEnd == null)){
+            events.addAll(repository.findAll());
+        } else {
+            LocalDateTime start = EventMapper.stringToLocalDateTime(rangeStart);
+            LocalDateTime end = EventMapper.stringToLocalDateTime(rangeEnd);
             for (String state : states) {
                 for (Long category : categories) {
-                    events.addAll(repository.findEventsInRangeByStateByCategoryId(start, end, state, category));
-                }
-            }
-        } else if (categories.size() == 0) {
-            for (String state : states) {
-                for (Long userId : userIds) {
-                    events.addAll(repository.findEventsInRangeByStateIdByUserId(start, end, state, userId));
-                }
-            }
-        }
-        if (categories.size() == 0 && states.size() == 0) {
-            for (Long userId : userIds) {
-                events.addAll(repository.findEventsInRangeByUserId(start, end, userId));
-            }
-        } else if (categories.size() == 0 && userIds.size() == 0) {
-            for (String state : states) {
-                events.addAll(repository.findEventsInRangeByState(start, end, state));
-            }
-        } else if (states.size() == 0 && userIds.size() == 0) {
-            for (Long category : categories) {
-                events.addAll(repository.findEventsInRangeByCategoryId(start, end, category));
-            }
-        }
-        for (String state : states) {
-            for (Long category : categories) {
-                for (Long userId : userIds) {
-                    events.addAll(repository.findEventsInRangeByStateByCategoryIdByUserId(start, end, state, category, userId));
+                    for (Long userId : users) {
+                        events.addAll(repository.findEventsByParameters(start, end, state, category, userId));
+                    }
                 }
             }
         }
@@ -216,9 +159,16 @@ public class EventServiceImpl implements EventService {
             eventNewDtoForUpdate.setEventDate(EventMapper.localDateTimeToString(event.getEventDate()));
         }
         saveOldVariablesExceptNull(event, eventNewDtoForUpdate);
+        String state = "";
+        if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.CANCEL_REVIEW.toString())) {
+            state = StateEnum.CANCELED.toString();
+        }
+        if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.SEND_TO_REVIEW.toString())) {
+            state = StateEnum.PENDING.toString();
+        }
 
         Event updatedEvent = EventMapper.toEvent(eventNewDtoForUpdate, event.getConfirmedRequests(), event.getCreatedOn(),
-                userId, event.getPublishedOn(), StateEnum.PENDING.toString(), event.getViews());
+                userId, event.getPublishedOn(), state, event.getViews());
 
         updatedEvent.setId(eventId);
         repository.save(updatedEvent);
@@ -227,6 +177,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventFullDto updateEventAdmin(long eventId, EventNewDtoForUpdate eventNewDtoForUpdate) {
+        eventCancelValid(eventId);
         eventPublishValid(eventId);
         Event event = repository.getById(eventId);
         if (eventNewDtoForUpdate.getEventDate() != null){
@@ -239,8 +190,8 @@ public class EventServiceImpl implements EventService {
         if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.PUBLISH_EVENT.toString())) {
             state = StateEnum.PUBLISHED.toString();
         }
-        if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.CANCEL_EVENT.toString())) {
-            state = StateEnum.CANCELED.toString();
+        if (eventNewDtoForUpdate.getStateAction().equals(StateEnum.REJECT_EVENT.toString())) {
+            state = StateEnum.REJECTED.toString();
         }
         long userId = event.getInitiatorId();
         Event updatedEvent = EventMapper.toEvent(eventNewDtoForUpdate, event.getConfirmedRequests(), event.getCreatedOn(), userId,
@@ -287,6 +238,14 @@ public class EventServiceImpl implements EventService {
         if (repository.getById(eventId).getState().equals(StateEnum.PUBLISHED.toString())) {
             log.error("Опубликованное событие c id {} изменить нельзя", eventId);
             throw new ConflictException("Опубликованное событие изменить нельзя");
+        }
+    }
+
+    private void eventCancelValid(long eventId) {
+        if (repository.getById(eventId).getState().equals(StateEnum.REJECTED.toString()) ||
+                repository.getById(eventId).getState().equals(StateEnum.CANCELED.toString())) {
+            log.error("Отмененное событие c id {} изменить нельзя", eventId);
+            throw new ConflictException("Отмененное событие изменить нельзя");
         }
     }
 

@@ -12,7 +12,7 @@ public interface EventService {
 
     EventFullDto getEventOfOwnerByEventId(long userId, long eventId);
 
-    List<EventFullDto> getAllEventsAdmin(List<Long> userIds, List<String> states, List<Long> categories, String rangeStart,
+    List<EventFullDto> getAllEventsAdmin(List<Long> users, List<String> states, List<Long> categories, String rangeStart,
                                          String rangeEnd, long from, long size);
 
     EventFullDto saveEvent(long userId, EventNewDto eventNewDto);

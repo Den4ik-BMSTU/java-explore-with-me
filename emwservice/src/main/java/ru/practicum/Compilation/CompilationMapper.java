@@ -25,4 +25,11 @@ public final class CompilationMapper {
         compilation.setTitle(compilationNewDto.getTitle());
         return compilation;
     }
+
+    public static Compilation toCompilation(CompilationDtoForUpdate compilationDtoForUpdate) {
+        Compilation compilation = new Compilation();
+        compilation.setPinned(compilationDtoForUpdate.getPinned());
+        compilation.setTitle(compilationDtoForUpdate.getTitle());
+        return compilation;
+    }
 }

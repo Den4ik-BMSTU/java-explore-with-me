@@ -15,8 +15,8 @@ import ru.practicum.Event.EventMapper;
 import ru.practicum.Event.EventRepository;
 import ru.practicum.User.UserMapper;
 import ru.practicum.User.UserRepository;
-import ru.practicum.exceptions.ConflictException;
 import ru.practicum.exceptions.NotFoundException;
+import ru.practicum.exceptions.IncorrectParameterException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,30 +69,30 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    public CompilationDto updateCompilation(long compId, CompilationNewDto compilationNewDto) {
+    public CompilationDto updateCompilation(long compId, CompilationDtoForUpdate compilationDtoForUpdate) {
         compilationValid(compId);
         Compilation compilation = repository.getById(compId);
-        if (compilationNewDto.getPinned() == null) {
-            compilationNewDto.setPinned(compilation.getPinned());
+        if (compilationDtoForUpdate.getPinned() == null) {
+            compilationDtoForUpdate.setPinned(compilation.getPinned());
         }
-        if (compilationNewDto.getTitle() == null) {
-            compilationNewDto.setTitle(compilation.getTitle());
+        if (compilationDtoForUpdate.getTitle() == null) {
+            compilationDtoForUpdate.setTitle(compilation.getTitle());
         }
-        if (compilationNewDto.getEvents() == null) {
-            compilationNewDto.setEvents(repository.findAllEventIdsByCompilationId(compId));
+        if (compilationDtoForUpdate.getEvents() == null) {
+            compilationDtoForUpdate.setEvents(repository.findAllEventIdsByCompilationId(compId));
         } else {
             String sqlDelete = "DELETE FROM events_compilations WHERE compilation_id = ? ";
             jdbcTemplate.update(sqlDelete, compId);
-            if (compilationNewDto.getEvents().size() != 0){
-                for (Long eventId : compilationNewDto.getEvents()) {
+            if (compilationDtoForUpdate.getEvents().size() != 0){
+                for (Long eventId : compilationDtoForUpdate.getEvents()) {
                     String sqlInsert = "INSERT INTO events_compilations(compilation_id, event_id) VALUES (?, ?) ";
                     jdbcTemplate.update(sqlInsert, compId, eventId);
                 }
             }
         }
-        Compilation newCompilation = CompilationMapper.toCompilation(compilationNewDto);
+        Compilation newCompilation = CompilationMapper.toCompilation(compilationDtoForUpdate);
         newCompilation.setId(compId);
-        return CompilationMapper.toCompilationDto(repository.save(newCompilation), getFullEventDtoList(compilationNewDto.getEvents()));
+        return CompilationMapper.toCompilationDto(repository.save(newCompilation), getFullEventDtoList(compilationDtoForUpdate.getEvents()));
     }
 
     private List<EventFullDto> getFullEventDtoList(List<Long> eventIds) {
