@@ -25,7 +25,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password12345
 
-  stats-server:
+  stats-service:
     build: statservice
     image: statservice-image
     container_name: statservice_container
