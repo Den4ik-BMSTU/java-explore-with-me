@@ -26,10 +26,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password12345
 
-  statservice:
+  statsservice:
     build: statservice
     image: statservice_image
-    container_name: statsservice_container
+    container_name: statservice_container
     ports:
       - "9090:9090"
     depends_on:
