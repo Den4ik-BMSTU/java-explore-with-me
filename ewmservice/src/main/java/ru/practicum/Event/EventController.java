@@ -44,10 +44,7 @@ public class EventController {
         log.info("События найдены");
         List<EventFullDto> events = eventService.getAllEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sort, from, size, request);
-        for (EventFullDto event : events) {
-            client.saveStat(EndpointHitDtoMapper.toEndpointHitDto(request.getRemoteAddr(), request.getServerName(),
-                    request.getRequestURI() + "/" + event.getId().toString()));
-        }
+        client.saveStat(EndpointHitDtoMapper.toEndpointHitDto(request.getRemoteAddr(), request.getRequestURI()));
         log.info("Статистика просмотров сохранена");
         return events;
     }
@@ -55,8 +52,7 @@ public class EventController {
     @GetMapping("/events/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable("id") long id, HttpServletRequest request) {
-        client.saveStat(EndpointHitDtoMapper.toEndpointHitDto(request.getRemoteAddr(), request.getServerName(),
-                request.getRequestURI()));
+        client.saveStat(EndpointHitDtoMapper.toEndpointHitDto(request.getRemoteAddr(), request.getRequestURI()));
         log.info("Событие найдено");
         log.info("Статистика просмотров сохранена");
         return eventService.getEventById(id);
