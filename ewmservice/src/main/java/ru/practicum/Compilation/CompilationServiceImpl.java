@@ -13,7 +13,6 @@ import ru.practicum.Event.EventMapper;
 import ru.practicum.Event.EventRepository;
 import ru.practicum.User.UserMapper;
 import ru.practicum.User.UserRepository;
-import ru.practicum.exceptions.IncorrectParameterException;
 import ru.practicum.exceptions.NotFoundException;
 
 import java.util.List;

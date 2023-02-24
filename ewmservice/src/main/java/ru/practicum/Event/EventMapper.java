@@ -88,5 +88,4 @@ public final class EventMapper {
         String localDateTime = timestamp.format(formatter);
         return localDateTime;
     }
-
 }

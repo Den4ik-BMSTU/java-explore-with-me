@@ -68,5 +68,4 @@ public class Event {
 
     @Column(name = "state_action")
     String stateAction;
-
 }

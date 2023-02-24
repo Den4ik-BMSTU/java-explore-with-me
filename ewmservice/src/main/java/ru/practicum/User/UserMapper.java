@@ -31,5 +31,4 @@ public final class UserMapper {
         }
         return result;
     }
-
 }

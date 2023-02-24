@@ -37,7 +37,7 @@ public class EventServiceImpl implements EventService {
         List<Event> events = new ArrayList<>();
         String state = StateEnum.PUBLISHED.toString();
         if ((text == null || text.isEmpty()) || (categories == null || categories.isEmpty()) || rangeStart == null ||
-                rangeEnd == null || sort == null){
+                rangeEnd == null || sort == null) {
             events.addAll(repository.findAll().stream()
                     .filter(a -> a.getState().equals(state))
                     .collect(Collectors.toList()));
@@ -108,7 +108,7 @@ public class EventServiceImpl implements EventService {
                                                 String rangeStart, String rangeEnd, long from, long size) {
         List<Event> events = new ArrayList<>();
         if ((states == null || states.isEmpty()) || (categories == null || categories.isEmpty())
-                || (users == null || users.isEmpty() || rangeStart == null || rangeEnd == null)){
+                || (users == null || users.isEmpty() || rangeStart == null || rangeEnd == null)) {
             events.addAll(repository.findAll());
         } else {
             LocalDateTime start = EventMapper.stringToLocalDateTime(rangeStart);

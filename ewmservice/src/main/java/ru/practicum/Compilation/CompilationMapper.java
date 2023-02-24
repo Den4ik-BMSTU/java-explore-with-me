@@ -31,5 +31,4 @@ public final class CompilationMapper {
         compilation.setTitle(compilationDtoForUpdate.getTitle());
         return compilation;
     }
-
 }

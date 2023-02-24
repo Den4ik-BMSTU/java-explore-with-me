@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users
     CONSTRAINT pk_users PRIMARY KEY (id),
     CONSTRAINT name_is_blank CHECK (name NOT LIKE ' ' AND name NOT LIKE ''),
     CONSTRAINT email_is_not_correct CHECK (email LIKE '%@%')
-);
+    );
 
 CREATE TABLE IF NOT EXISTS categories
 (
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS categories
     name VARCHAR                                 NOT NULL UNIQUE,
     CONSTRAINT pk_categories PRIMARY KEY (id),
     CONSTRAINT name_is_blank CHECK (name NOT LIKE ' ' AND name NOT LIKE '')
-);
+    );
 
 CREATE TABLE IF NOT EXISTS events
 (
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS events
     CONSTRAINT title_is_blank CHECK (title NOT LIKE ' ' AND title NOT LIKE ''),
     CONSTRAINT fk_events_to_users FOREIGN KEY (initiator_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_events_to_categories FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
-);
+    );
 
 CREATE TABLE IF NOT EXISTS requests
 (
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS requests
     CONSTRAINT pk_requests PRIMARY KEY (id),
     CONSTRAINT fk_requests_to_events FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE,
     CONSTRAINT fk_requests_to_users FOREIGN KEY (requester_id) REFERENCES users (id) ON DELETE CASCADE
-);
+    );
 
 CREATE TABLE IF NOT EXISTS compilations
 (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS compilations
     pinned BOOLEAN                                 NOT NULL,
     title  VARCHAR                                 NOT NULL,
     CONSTRAINT pk_compilations PRIMARY KEY (id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS events_compilations
 (
@@ -72,4 +72,4 @@ CREATE TABLE IF NOT EXISTS events_compilations
     CONSTRAINT pk_events_compilations PRIMARY KEY (id),
     CONSTRAINT fk_events_compilations_to_compilations FOREIGN KEY (compilation_id) REFERENCES compilations (id) ON DELETE CASCADE,
     CONSTRAINT fk_events_compilations_to_events FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
-);
+    );

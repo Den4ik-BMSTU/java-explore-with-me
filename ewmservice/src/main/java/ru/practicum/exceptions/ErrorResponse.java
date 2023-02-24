@@ -1,12 +1,8 @@
 package ru.practicum.exceptions;
 
-import jdk.jfr.StackTrace;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.ObjectError;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class ErrorResponse {
     private final String error;

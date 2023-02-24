@@ -7,7 +7,7 @@ public interface RequestService {
 
     List<RequestDto> getAllRequestsByOwnerIdAndByEventId(long userId, long eventId);
 
-    RequestDto saveRequest(long userId, long eventId);
+    RequestDto saveRequest(long userId, Long eventId);
 
     RequestDto cancelRequest(long userId, long requestId);
 

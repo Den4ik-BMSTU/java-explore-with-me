@@ -20,22 +20,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers(List<Long> ids, long from, long size) {
+        List<UserDto> userDtos = new ArrayList<>();
         if (ids.size() == 0) {
-            return UserMapper.toListUserDto(repository.findAll().stream()
-                    .skip(from)
-                    .limit(size)
-                    .collect(Collectors.toList()));
+            userDtos = UserMapper.toListUserDto(repository.findAll());
         } else {
-            List<UserDto> userDtos = new ArrayList<>();
             for (Long id : ids) {
-                userValid(id);
-                userDtos.add(UserMapper.toUserDto(repository.findUserById(id)));
+                User userExist = repository.findUserById(id);
+                if (userExist != null) {
+                    userDtos.add(UserMapper.toUserDto(userExist));
+                }
             }
-            return userDtos.stream()
-                    .skip(from)
-                    .limit(size)
-                    .collect(Collectors.toList());
+
         }
+        return userDtos.stream()
+                .skip(from)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     @Transactional

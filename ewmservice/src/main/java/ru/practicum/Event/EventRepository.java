@@ -28,8 +28,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = "select e.* " +
             "from events as e " +
             "where e.event_date > ?1 and e.event_date < ?2 and e.category_id = ?3 " +
-            "and e.paid = ?4 and e.confirmed_requests < e.participant_limit  and e.state = ?5 ", nativeQuery = true)
+            "and e.paid = ?4 and e.state = ?5 ", nativeQuery = true)
     List<Event> findEventsPublishedByParameters(LocalDateTime rangeStart, LocalDateTime rangeEnd, Long category,
-                                                           boolean paid, String state);
-
+                                                boolean paid, String state);
 }

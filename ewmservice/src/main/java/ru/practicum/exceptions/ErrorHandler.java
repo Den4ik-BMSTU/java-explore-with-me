@@ -37,10 +37,10 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage(), HttpStatus.CONFLICT, LocalDateTime.now());
     }
 
-    /*@ExceptionHandler
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleThrowable(final Throwable e) {
         return new ErrorResponse("Произошла непредвиденная ошибка.", HttpStatus.INTERNAL_SERVER_ERROR,
                 LocalDateTime.now());
-    }*/
+    }
 }

@@ -35,7 +35,7 @@ public class RequestController {
     @PostMapping("/requests")
     @ResponseStatus(HttpStatus.CREATED)
     public RequestDto saveRequest(@PathVariable("userId") long userId,
-                                  @RequestParam(value = "eventId") long eventId) {
+                                  @RequestParam(value = "eventId", required = false) Long eventId) {
         log.info("Заявка создана");
         return requestService.saveRequest(userId, eventId);
     }

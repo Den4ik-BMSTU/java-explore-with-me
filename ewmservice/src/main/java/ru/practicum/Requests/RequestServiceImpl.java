@@ -10,6 +10,7 @@ import ru.practicum.Event.EventRepository;
 import ru.practicum.State.StateEnum;
 import ru.practicum.User.UserRepository;
 import ru.practicum.exceptions.ConflictException;
+import ru.practicum.exceptions.IncorrectParameterException;
 import ru.practicum.exceptions.NotFoundException;
 
 import java.util.ArrayList;
@@ -43,7 +44,11 @@ public class RequestServiceImpl implements RequestService {
 
     @Transactional
     @Override
-    public RequestDto saveRequest(long userId, long eventId) {
+    public RequestDto saveRequest(long userId, Long eventId) {
+        if (eventId == null) {
+            log.error("Отсутствует id события");
+            throw new IncorrectParameterException("Отсутствует id события");
+        }
         userValid(userId);
         eventValid(eventId);
         if (repository.findRequestsByUserIdAndByEventId(userId, eventId).size() != 0) {
