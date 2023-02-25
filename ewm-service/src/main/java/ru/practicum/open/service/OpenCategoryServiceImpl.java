@@ -3,10 +3,10 @@ package ru.practicum.open.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.common.dto.CategoryDto;
-import ru.practicum.common.exceptions.EntityNotFoundException;
-import ru.practicum.common.mapper.CategoryMapper;
-import ru.practicum.common.model.Category;
+import ru.practicum.comon.dto.CategoryDto;
+import ru.practicum.comon.exception.EntityNotFoundException;
+import ru.practicum.comon.maper.CategoryMapper;
+import ru.practicum.comon.model.Category;
 import ru.practicum.open.storage.OpenCategoryRepository;
 
 import java.util.List;

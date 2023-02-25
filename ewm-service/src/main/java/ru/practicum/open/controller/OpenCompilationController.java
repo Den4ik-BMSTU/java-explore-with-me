@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.common.dto.CompilationDto;
-import ru.practicum.common.model.FromSizeRequest;
+import ru.practicum.comon.dto.CompilationDto;
+import ru.practicum.comon.model.FromSizeRequest;
 import ru.practicum.open.service.OpenCompilationService;
 
 import java.util.List;

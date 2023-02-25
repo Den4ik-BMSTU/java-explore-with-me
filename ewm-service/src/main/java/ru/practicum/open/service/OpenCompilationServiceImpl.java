@@ -4,11 +4,11 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.common.dto.CompilationDto;
-import ru.practicum.common.exceptions.EntityNotFoundException;
-import ru.practicum.common.mapper.CompilationMapper;
-import ru.practicum.common.model.Compilation;
-import ru.practicum.common.model.QCompilation;
+import ru.practicum.comon.dto.CompilationDto;
+import ru.practicum.comon.exception.EntityNotFoundException;
+import ru.practicum.comon.maper.CompilationMapper;
+import ru.practicum.comon.model.Compilation;
+import ru.practicum.comon.model.QCompilation;
 import ru.practicum.open.storage.OpenCompilationRepository;
 
 import java.util.List;

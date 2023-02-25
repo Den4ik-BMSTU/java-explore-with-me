@@ -1,7 +1,7 @@
 package ru.practicum.open.service;
 
 import org.springframework.data.domain.Pageable;
-import ru.practicum.common.dto.CategoryDto;
+import ru.practicum.comon.dto.CategoryDto;
 
 import java.util.List;
 

@@ -6,8 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.common.dto.CategoryDto;
-import ru.practicum.common.model.FromSizeRequest;
+import ru.practicum.comon.dto.CategoryDto;
+import ru.practicum.comon.model.FromSizeRequest;
 import ru.practicum.open.service.OpenCategoryService;
 
 import java.util.List;

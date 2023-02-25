@@ -8,14 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.practicum.StatsClient;
-import ru.practicum.common.dto.EventFullDto;
-import ru.practicum.common.dto.EventShortDto;
-import ru.practicum.common.exceptions.EntityNotFoundException;
-import ru.practicum.common.exceptions.StatsClientResponseException;
-import ru.practicum.common.mapper.EventMapper;
-import ru.practicum.common.model.Event;
-import ru.practicum.common.model.QEvent;
-import ru.practicum.common.util.StateRequest;
+import ru.practicum.comon.dto.EventFullDto;
+import ru.practicum.comon.dto.EventShortDto;
+import ru.practicum.comon.exception.EntityNotFoundException;
+import ru.practicum.comon.exception.StatsClientResponseException;
+import ru.practicum.comon.maper.EventMapper;
+import ru.practicum.comon.model.Event;
+import ru.practicum.comon.model.QEvent;
+import ru.practicum.comon.util.StateRequest;
 import ru.practicum.dto.EventRequestParams;
 import ru.practicum.dto.RequestHitDto;
 import ru.practicum.dto.ResponseHitDto;
@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ru.practicum.common.util.State.PUBLISHED;
+import static ru.practicum.comon.util.State.PUBLISHED;
 
 @Service
 @RequiredArgsConstructor
