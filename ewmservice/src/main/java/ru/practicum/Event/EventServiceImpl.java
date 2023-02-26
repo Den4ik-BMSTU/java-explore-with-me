@@ -69,12 +69,12 @@ public class EventServiceImpl implements EventService {
     public EventFullDto getEventById(long id) {
         eventValid(id);
         if (repository.getById(id).getState().equals(StateEnum.PUBLISHED.toString())) {
-            String sqlSelect = "SELECT views FROM events WHERE id = ?";
+            String sqlSelect = "SELECT VIEWS FROM EVENTS WHERE ID = ?";
             Long views = jdbcTemplate.queryForObject(sqlSelect, Long.class, id);
             views++;
-            String sqlUpdate = "UPDATE events SET views = ? WHERE id = ?";
+            String sqlUpdate = "UPDATE EVENTS SET VIEWS = ? WHERE ID = ?";
             jdbcTemplate.update(sqlUpdate, views, id);
-            String sql = "SELECT * FROM events WHERE id = ?";
+            String sql = "SELECT * FROM EVENTS WHERE ID = ?";
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
             rowSet.next();
             Event event = repository.findEventById(id);

@@ -19,22 +19,22 @@ public class RequestController {
 
     @GetMapping("/requests")
     @ResponseStatus(HttpStatus.OK)
-    public List<RequestDto> getAllRequestsOfUser(@PathVariable("userId") long userId) {
+    public List<RequestDto> getAllRequestsOfUser(@PathVariable long userId) {
         log.info("Найдены запросы на участие");
         return requestService.getAllRequestsOfUser(userId);
     }
 
     @GetMapping("/events/{eventId}/requests")
     @ResponseStatus(HttpStatus.OK)
-    public List<RequestDto> getAllRequestsByOwnerIdAndByEventId(@PathVariable("userId") long userId,
-                                                                @PathVariable("eventId") long eventId) {
+    public List<RequestDto> getAllRequestsByOwnerIdAndByEventId(@PathVariable long userId,
+                                                                @PathVariable long eventId) {
         log.info("Найдены запросы на участие");
         return requestService.getAllRequestsByOwnerIdAndByEventId(userId, eventId);
     }
 
     @PostMapping("/requests")
     @ResponseStatus(HttpStatus.CREATED)
-    public RequestDto saveRequest(@PathVariable("userId") long userId,
+    public RequestDto saveRequest(@PathVariable long userId,
                                   @RequestParam(value = "eventId", required = false) Long eventId) {
         log.info("Заявка создана");
         return requestService.saveRequest(userId, eventId);
@@ -42,16 +42,16 @@ public class RequestController {
 
     @PatchMapping("/requests/{requestId}/cancel")
     @ResponseStatus(HttpStatus.OK)
-    public RequestDto cancelRequest(@PathVariable("userId") long userId,
-                                    @PathVariable("requestId") long requestId) {
+    public RequestDto cancelRequest(@PathVariable long userId,
+                                    @PathVariable long requestId) {
         log.info("Заявка отменена");
         return requestService.cancelRequest(userId, requestId);
     }
 
     @PatchMapping("/events/{eventId}/requests")
     @ResponseStatus(HttpStatus.OK)
-    public RequestListStatusUpdateResult updateRequestsStatus(@PathVariable("userId") long userId,
-                                                              @PathVariable("eventId") long eventId,
+    public RequestListStatusUpdateResult updateRequestsStatus(@PathVariable long userId,
+                                                              @PathVariable long eventId,
                                                               @Valid @RequestBody RequestListStatusUpdate requestListStatusUpdate) {
         log.info("Статус заявок изменён");
         return requestService.updateRequestsStatus(userId, eventId, requestListStatusUpdate);

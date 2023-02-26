@@ -35,7 +35,7 @@ public class CategoryController {
 
     @GetMapping("/categories/{catId}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDto getCategoryById(@PathVariable("catId") long catId) {
+    public CategoryDto getCategoryById(@PathVariable long catId) {
         log.info("Категория найдена");
         return categoryService.getCategoryById(catId);
     }
@@ -49,14 +49,14 @@ public class CategoryController {
 
     @DeleteMapping("/admin/categories/{catId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeCategory(@PathVariable("catId") long catId) {
+    public void removeCategory(@PathVariable long catId) {
         log.info("Категория удалена");
         categoryService.removeCategory(catId);
     }
 
     @PatchMapping("/admin/categories/{catId}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDto updateCategory(@PathVariable("catId") long catId,
+    public CategoryDto updateCategory(@PathVariable long catId,
                                       @Valid @RequestBody CategoryDto categoryDto) {
         log.info("Данные категории изменены");
         return categoryService.updateCategory(catId, categoryDto);

@@ -9,26 +9,27 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
     Event findEventById(Long id);
 
-    @Query(value = "select e.* " +
-            "from events as e " +
-            "where e.initiator_id = ?1 ", nativeQuery = true)
+    @Query(value = "SELECT E.* " +
+            "FROM EVENTS AS E " +
+            "WHERE E.INITIATOR_ID = ?1 ", nativeQuery = true)
     List<Event> findEventsByUserId(long userId);
 
-    @Query(value = "select e.* " +
-            "from events as e " +
-            "where e.id = ?1 and e.initiator_id = ?2", nativeQuery = true)
+    @Query(value = "SELECT E.* " +
+            "FROM EVENTS AS E " +
+            "WHERE E.ID = ?1 AND e.INITIATOR_ID = ?2", nativeQuery = true)
     Event findEventByIdAndByUserId(long eventId, long userId);
 
-    @Query(value = "select e.* " +
-            "from events as e " +
-            "where e.event_date > ?1 and e.event_date < ?2 and e.state = ?3 and e.category_id = ?4 " +
-            "and e.initiator_id = ?5 ", nativeQuery = true)
-    List<Event> findEventsByParameters(LocalDateTime rangeStart, LocalDateTime rangeEnd, String state, Long category, Long userId);
+    @Query(value = "SELECT E.* " +
+            "FROM EVENTS AS E " +
+            "WHERE E.EVENT_DATE > ?1 AND E.EVENT_DATE < ?2 AND E.STATE = ?3 AND E.CATEGORY_ID = ?4 " +
+            "AND E.INITIATOR_ID = ?5 ", nativeQuery = true)
+    List<Event> findEventsByParameters(LocalDateTime rangeStart, LocalDateTime rangeEnd, String state, Long category,
+                                       Long userId);
 
-    @Query(value = "select e.* " +
-            "from events as e " +
-            "where e.event_date > ?1 and e.event_date < ?2 and e.category_id = ?3 " +
-            "and e.paid = ?4 and e.state = ?5 ", nativeQuery = true)
+    @Query(value = "SELECT E.* " +
+            "FROM EVENTS AS E " +
+            "WHERE E.EVENT_DATE > ?1 AND E.EVENT_DATE < ?2 AND E.CATEGORY_ID = ?3 " +
+            "AND E.PAID = ?4 AND E.STATE = ?5 ", nativeQuery = true)
     List<Event> findEventsPublishedByParameters(LocalDateTime rangeStart, LocalDateTime rangeEnd, Long category,
                                                 boolean paid, String state);
 

@@ -70,10 +70,10 @@ public class RequestServiceImpl implements RequestService {
         Request request = RequestMapper.toRequest(userId, eventId);
         if (!eventRepository.getById(eventId).getRequestModeration()) {
             request.setStatus(StateEnum.CONFIRMED.toString());
-            String sqlSelect = "SELECT confirmed_requests FROM events WHERE id = ?";
+            String sqlSelect = "SELECT CONFIRMED_REQUESTS FROM EVENTS WHERE ID = ?";
             Long confirmedRequests = jdbcTemplate.queryForObject(sqlSelect, Long.class, eventId);
             confirmedRequests++;
-            String sqlUpdate = "UPDATE events SET confirmed_requests = ? WHERE id = ?";
+            String sqlUpdate = "UPDATE EVENTS SET CONFIRMED_REQUESTS = ? WHERE ID = ?";
             jdbcTemplate.update(sqlUpdate, confirmedRequests, eventId);
         } else {
             request.setStatus(StateEnum.PENDING.toString());
@@ -92,10 +92,10 @@ public class RequestServiceImpl implements RequestService {
             throw new ConflictException("Пользователю запрещено отменять чужой запрос!");
         }
         if (request.getStatus().equals(StateEnum.CONFIRMED.toString())) {
-            String sqlSelect = "SELECT confirmed_requests FROM events WHERE id = ?";
+            String sqlSelect = "SELECT CONFIRMED_REQUESTS FROM EVENTS WHERE ID = ?";
             Long confirmedRequests = jdbcTemplate.queryForObject(sqlSelect, Long.class, request.getEvent());
             confirmedRequests--;
-            String sqlUpdate = "UPDATE events SET confirmed_requests = ? WHERE id = ?";
+            String sqlUpdate = "UPDATE EVENTS SET CONFIRMED_REQUESTS = ? WHERE ID = ?";
             jdbcTemplate.update(sqlUpdate, confirmedRequests, request.getEvent());
         }
         request.setStatus(StateEnum.CANCELED.toString());
@@ -137,12 +137,12 @@ public class RequestServiceImpl implements RequestService {
         for (Long requestId : requestIds) {
             Request request = repository.getById(requestId);
             request.setStatus(requestListStatusUpdate.getStatus());
-            String sqlSelect = "SELECT confirmed_requests FROM events WHERE id = ?";
+            String sqlSelect = "SELECT CONFIRMED_REQUESTS FROM EVENTS WHERE ID = ?";
             Long numberConfirmedRequests = jdbcTemplate.queryForObject(sqlSelect, Long.class, eventId);
             numberConfirmedRequests++;
-            String sqlUpdate = "UPDATE events SET confirmed_requests = ? WHERE id = ?";
+            String sqlUpdate = "UPDATE EVENTS SET CONFIRMED_REQUESTS = ? WHERE ID = ?";
             jdbcTemplate.update(sqlUpdate, numberConfirmedRequests, eventId);
-            String sql = "SELECT * FROM events WHERE id = ?";
+            String sql = "SELECT * FROM EVENTS WHERE ID = ?";
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, eventId);
             rowSet.next();
             repository.save(request);

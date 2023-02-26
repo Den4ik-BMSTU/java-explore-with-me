@@ -36,7 +36,7 @@ public class CompilationController {
 
     @GetMapping("/compilations/{compId}")
     @ResponseStatus(HttpStatus.OK)
-    public CompilationDto getCompilationById(@PathVariable("compId") long compId) {
+    public CompilationDto getCompilationById(@PathVariable long compId) {
         log.info("Подборка событий найдена");
         return compilationService.getCompilationById(compId);
     }
@@ -51,14 +51,14 @@ public class CompilationController {
 
     @DeleteMapping("/admin/compilations/{compId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeCompilation(@PathVariable("compId") long compId) {
+    public void removeCompilation(@PathVariable long compId) {
         log.info("Подборка удалена");
         compilationService.removeCompilation(compId);
     }
 
     @PatchMapping("/admin/compilations/{compId}")
     @ResponseStatus(HttpStatus.OK)
-    public CompilationDto updateCompilation(@PathVariable("compId") long compId,
+    public CompilationDto updateCompilation(@PathVariable long compId,
                                             @Valid @RequestBody CompilationDtoForUpdate compilationDtoForUpdate) {
         log.info("Подборка обновлена");
         return compilationService.updateCompilation(compId, compilationDtoForUpdate);

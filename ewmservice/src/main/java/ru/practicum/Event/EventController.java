@@ -51,7 +51,7 @@ public class EventController {
 
     @GetMapping("/events/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto getEventById(@PathVariable("id") long id, HttpServletRequest request) {
+    public EventFullDto getEventById(@PathVariable long id, HttpServletRequest request) {
         client.saveStat(EndpointHitDtoMapper.toEndpointHitDto(request.getRemoteAddr(), request.getRequestURI()));
         log.info("Событие найдено");
         log.info("Статистика просмотров сохранена");
@@ -60,7 +60,7 @@ public class EventController {
 
     @GetMapping("/users/{userId}/events")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventFullDto> getAllEventsOfOwner(@PathVariable("userId") long userId,
+    public List<EventFullDto> getAllEventsOfOwner(@PathVariable long userId,
                                                   @RequestParam(value = "from", defaultValue = "0") long from,
                                                   @RequestParam(value = "size", defaultValue = "10") long size) {
         if (from < 0) {
@@ -77,8 +77,8 @@ public class EventController {
 
     @GetMapping("/users/{userId}/events/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto getEventOfOwnerByEventId(@PathVariable("userId") long userId,
-                                                 @PathVariable("eventId") long eventId) {
+    public EventFullDto getEventOfOwnerByEventId(@PathVariable long userId,
+                                                 @PathVariable long eventId) {
         log.info("Событие найдено");
         return eventService.getEventOfOwnerByEventId(userId, eventId);
     }
@@ -106,7 +106,7 @@ public class EventController {
 
     @PostMapping("/users/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventFullDto saveEvent(@PathVariable("userId") long userId,
+    public EventFullDto saveEvent(@PathVariable long userId,
                                   @Valid @RequestBody EventNewDto eventNewDto) {
         log.info("Событие добавлено");
         return eventService.saveEvent(userId, eventNewDto);
@@ -114,8 +114,8 @@ public class EventController {
 
     @PatchMapping("/users/{userId}/events/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto updateEvent(@PathVariable("userId") long userId,
-                                    @PathVariable("eventId") long eventId,
+    public EventFullDto updateEvent(@PathVariable long userId,
+                                    @PathVariable long eventId,
                                     @Valid @RequestBody EventNewDtoForUpdate eventNewDtoForUpdate) {
         log.info("Событие обновлено");
         return eventService.updateEvent(userId, eventId, eventNewDtoForUpdate);
@@ -123,7 +123,7 @@ public class EventController {
 
     @PatchMapping("/admin/events/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto updateEventAdmin(@PathVariable("eventId") long eventId,
+    public EventFullDto updateEventAdmin(@PathVariable long eventId,
                                          @Valid @RequestBody EventNewDtoForUpdate eventNewDtoForUpdate) {
         log.info("Событие отредактировано");
         return eventService.updateEventAdmin(eventId, eventNewDtoForUpdate);

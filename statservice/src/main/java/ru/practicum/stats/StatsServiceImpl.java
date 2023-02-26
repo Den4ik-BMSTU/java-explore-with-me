@@ -31,13 +31,13 @@ public class StatsServiceImpl implements StatsService {
         for (String uri : uris) {
             String sqlQuery;
             if (unique) {
-                sqlQuery = "SELECT app, uri, COUNT(DISTINCT ip) AS hits FROM endpoint_hit " +
-                        "WHERE uri = :uri AND time_stamp > :start AND time_stamp < :end " +
-                        "GROUP BY app, uri ";
+                sqlQuery = "SELECT APP, URI, COUNT(DISTINCT IP) AS HITS FROM ENDPOINT_HIT " +
+                        "WHERE URI = :uri AND TIME_STAMP > :start AND TIME_STAMP < :end " +
+                        "GROUP BY APP, URI ";
             } else {
-                sqlQuery = "SELECT app, uri, COUNT(ip) AS hits FROM endpoint_hit " +
-                        "WHERE uri = :uri AND time_stamp > :start AND time_stamp < :end " +
-                        "GROUP BY app, uri ";
+                sqlQuery = "SELECT APP, URI, COUNT(IP) AS hits FROM ENDPOINT_HIT " +
+                        "WHERE URI = :uri AND TIME_STAMP > :start AND TIME_STAMP < :end " +
+                        "GROUP BY APP, URI ";
             }
             SqlParameterSource namedParameters = new MapSqlParameterSource()
                     .addValue("uri", uri)
