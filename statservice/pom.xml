@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>main-service</artifactId>
+    <artifactId>statservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>Main Service</name>
+    <name>Stats Service</name>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -74,11 +74,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
 
