@@ -13,7 +13,7 @@ public class Client extends BaseClient {
     private static final String API_PREFIX = "/hit";
 
     @Autowired
-    public Client(@Value("${statservice.url}") String serverUrl, RestTemplateBuilder builder) {
+    public Client(@Value("${stats-service.url}") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + API_PREFIX))
