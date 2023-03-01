@@ -19,18 +19,19 @@ public class StatsController {
     private final StatsService statsService;
 
     @GetMapping("/stats")
+    @ResponseStatus(HttpStatus.OK)
     public List<ViewStats> getStats(@RequestParam(value = "start") String start,
                                     @RequestParam(value = "end") String end,
                                     @RequestParam(value = "uris") List<String> uris,
                                     @RequestParam(value = "unique", defaultValue = "false") boolean unique) {
-        log.info("Получили всю статистику");
+        log.info("Статистика собрана");
         return statsService.getStats(start, end, uris, unique);
     }
 
     @PostMapping(path = "/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public EndpointHitDto saveHit(@Valid @RequestBody EndpointHitDto endpointHitDto) {
-        log.info("Сохранили запрос");
+        log.info("Информация сохранена");
         return statsService.saveHit(endpointHitDto);
     }
 }

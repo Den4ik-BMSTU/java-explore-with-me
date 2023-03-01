@@ -39,7 +39,6 @@ public final class StatsMapper {
     public static String localDateTimeToString(LocalDateTime timestamp) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String localDateTime = timestamp.format(formatter);
-        ;
         return localDateTime;
     }
 
