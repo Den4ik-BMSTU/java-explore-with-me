@@ -3,7 +3,6 @@ package ru.practicum.Event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.Category.*;
@@ -12,6 +11,9 @@ import ru.practicum.User.UserMapper;
 import ru.practicum.User.UserRepository;
 import ru.practicum.exceptions.ConflictException;
 import ru.practicum.exceptions.NotFoundException;
+import ru.practicum.Comment.CommentMapper;
+import ru.practicum.Comment.CommentRepository;
+import ru.practicum.Comment.CommentShortDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -29,6 +31,7 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final JdbcTemplate jdbcTemplate;
+    private final CommentRepository commentRepository;
 
     @Override
     public List<EventFullDto> getAllEvents(String text, List<Long> categories, boolean paid, String rangeStart,
@@ -69,16 +72,12 @@ public class EventServiceImpl implements EventService {
     public EventFullDto getEventById(long id) {
         eventValid(id);
         if (repository.getById(id).getState().equals(StateEnum.PUBLISHED.toString())) {
-            String sqlSelect = "SELECT VIEWS FROM EVENTS WHERE ID = ?";
-            Long views = jdbcTemplate.queryForObject(sqlSelect, Long.class, id);
+            Long views = repository.findEventById(id).getViews();
             views++;
             String sqlUpdate = "UPDATE EVENTS SET VIEWS = ? WHERE ID = ?";
             jdbcTemplate.update(sqlUpdate, views, id);
-            String sql = "SELECT * FROM EVENTS WHERE ID = ?";
-            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
-            rowSet.next();
             Event event = repository.findEventById(id);
-            event.setViews(rowSet.getLong("views"));
+            event.setViews(views);
             return toFullEventDtoAbsolutely(event);
         } else {
             log.error("Можно найти только опубликованное событие");
@@ -136,10 +135,7 @@ public class EventServiceImpl implements EventService {
         Event event = EventMapper.toEvent(eventNewDto, 0L, LocalDateTime.now(), userId, LocalDateTime.now(),
                 StateEnum.PENDING.toString(), 0L);
         repository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event,
-                CategoryMapper.toCategoryDto(categoryRepository.getById(eventNewDto.getCategory())),
-                UserMapper.toUserDto(userRepository.getById(userId)));
-        return eventFullDto;
+        return toFullEventDtoAbsolutely(event);
     }
 
     @Transactional
@@ -228,10 +224,14 @@ public class EventServiceImpl implements EventService {
         }
     }
 
-    private EventFullDto toFullEventDtoAbsolutely(Event event) {
+    public EventFullDto toFullEventDtoAbsolutely(Event event) {
+        List<CommentShortDto> comments = commentRepository.findCommentsByEventId(event.getId()).stream()
+                .map(a -> CommentMapper.toCommentShortDto(a, userRepository.getById(a.getUserId()).getName()))
+                .sorted(Comparator.comparing(CommentShortDto::getCreated))
+                .collect(Collectors.toList());
         return EventMapper.toEventFullDto(event,
                 CategoryMapper.toCategoryDto(categoryRepository.getById(event.getCategory())),
-                UserMapper.toUserDto(userRepository.getById(event.getInitiatorId())));
+                UserMapper.toUserDto(userRepository.getById(event.getInitiatorId())), comments);
     }
 
     private void eventPublishValid(long eventId) {

@@ -5,14 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.Category.CategoryMapper;
-import ru.practicum.Category.CategoryRepository;
-import ru.practicum.Event.Event;
-import ru.practicum.Event.EventFullDto;
-import ru.practicum.Event.EventMapper;
-import ru.practicum.Event.EventRepository;
-import ru.practicum.User.UserMapper;
-import ru.practicum.User.UserRepository;
+import ru.practicum.Event.*;
 import ru.practicum.exceptions.NotFoundException;
 
 import java.util.List;
@@ -25,8 +18,7 @@ import java.util.stream.Collectors;
 public class CompilationServiceImpl implements CompilationService {
     private final CompilationRepository repository;
     private final EventRepository eventRepository;
-    private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
+    private final EventServiceImpl eventService;
     private final JdbcTemplate jdbcTemplate;
 
     @Override
@@ -97,14 +89,8 @@ public class CompilationServiceImpl implements CompilationService {
     private List<EventFullDto> getFullEventDtoList(List<Long> eventIds) {
         return eventIds.stream()
                 .map(eventRepository::getById)
-                .map(this::toFullEventDtoAbsolutely)
+                .map(eventService::toFullEventDtoAbsolutely)
                 .collect(Collectors.toList());
-    }
-
-    private EventFullDto toFullEventDtoAbsolutely(Event event) {
-        return EventMapper.toEventFullDto(event,
-                CategoryMapper.toCategoryDto(categoryRepository.getById(event.getCategory())),
-                UserMapper.toUserDto(userRepository.getById(event.getInitiatorId())));
     }
 
     private void compilationValid(long compId) {
