@@ -4,3 +4,13 @@
 https://github.com/Den4ik-BMSTU/java-explore-with-me/pull/8
 
 Template repository for ExploreWithMe project.
+
+StatsService
+
+ 
+
+EwmService + Feature_Comments
+
+
+ 
+
