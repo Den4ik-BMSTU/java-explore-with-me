@@ -7,9 +7,9 @@ Template repository for ExploreWithMe project.
 
 StatsService
 
-statService.png
+
  
-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ENDPOINT_HIT:
+Таблица ENDPOINT_HIT:
 1. id - PRIMARY KEY AUTO INCREMENT
 2. app
 3. uri
@@ -19,15 +19,14 @@ statService.png
 
 EwmService + Feature_Comments
 
-ewmService&feature.png
- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ USERS
+Таблица USERS
 1. id - PRIMARY KEY AUTO INCREMENT
 2. name
 3. email
 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ CATEGORIES
 1. id - PRIMARY KEY AUTO INCREMENT
 2. name
-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ EVENTS
+Таблица EVENTS
 1. id - PRIMARY KEY AUTO INCREMENT
 2. annotation
 3. category_id - FOREIGN KEY (CATEGORIES)
@@ -46,21 +45,21 @@ ewmService&feature.png
 16. title
 17. views
 18. state_action
-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ REQUESTS
+Таблица REQUESTS
 1. id - PRIMARY KEY AUTO INCREMENT
 2. created
 3. event_id - FOREIGN KEY (EVENTS)
 4. requester_id - FOREIGN KEY (USERS)
 5. status
-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ COMPILATIONS
+Таблица COMPILATIONS
 1. id - PRIMARY KEY AUTO INCREMENT
 2. pinned
 3. title
-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ EVENTS_COMPILATIONS
+Таблица EVENTS_COMPILATIONS
 1. id - PRIMARY KEY AUTO INCREMENT
 2. compilation_id - FOREIGN KEY (COMPILATIONS)
 3. event_id - FOREIGN KEY (EVENTS)
-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ COMMENTS
+Таблица COMMENTS
 1. id - PRIMARY KEY AUTO INCREMENT
 2. comment_line
 3. user_id - FOREIGN KEY (USERS)
