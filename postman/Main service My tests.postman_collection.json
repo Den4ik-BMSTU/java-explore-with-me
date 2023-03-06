@@ -1,0 +1,6244 @@
+{
+	"info": {
+		"_postman_id": "b39c4850-9cf2-4e14-a01d-214c1a027684",
+		"name": "Main service My tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25925900"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.email, '\"email\" field').to.eql('user@user.com');",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('user');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user\",\n    \"email\": \"user@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User create duplicate email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user\",\n    \"email\": \"user@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User create fail no email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User create fail invalid email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user\",\n    \"email\": \"user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 2 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);",
+									"    pm.expect(jsonData.email, '\"email\" field').to.eql('user2@user.com');",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('user2');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user2\",\n    \"email\": \"user2@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User get 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get user 1\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length, 'users count in total').to.eql(1);",
+									"",
+									"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('user');",
+									"    pm.expect(jsonData[0].email, 'result[0]: \"email\" field').to.eql('user@user.com');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/users?ids=1&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "1"
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User get not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get user 1\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length, 'users count in total').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/users?ids=1111&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "1111"
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length, 'users count in total').to.eql(2);",
+									"",
+									"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('user');",
+									"    pm.expect(jsonData[0].email, 'result[0]: \"email\" field').to.eql('user@user.com');",
+									"",
+									"    pm.expect(jsonData[1].id, 'result[1]: \"id\" field').to.eql(2);",
+									"    pm.expect(jsonData[1].name, 'result[1]: \"name\" field').to.eql('user2');",
+									"    pm.expect(jsonData[1].email, 'result[1]: \"email\" field').to.eql('user2@user.com');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/users?ids=&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": ""
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User wrong delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/users/:userId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 3 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);",
+									"    pm.expect(jsonData.email, '\"email\" field').to.eql('user3@user.com');",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('user3');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user3\",\n    \"email\": \"user3@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 4 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user4\",\n    \"email\": \"user4@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 5 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user5\",\n    \"email\": \"user5@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 6 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user6\",\n    \"email\": \"user6@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 7 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user7\",\n    \"email\": \"user7@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User 8 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user8\",\n    \"email\": \"user8@user.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Category create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create category\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('Концерты');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Концерты\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category create duplicate name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Концерты\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category create fail no name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category create 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create category\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('Фильмы');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Фильмы\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all categories\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length, 'categories count in total').to.eql(2);",
+									"",
+									"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].name, 'result[0]: \"name\" field').to.eql('Концерты');",
+									"",
+									"    pm.expect(jsonData[1].id, 'result[1]: \"id\" field').to.eql(2);",
+									"    pm.expect(jsonData[1].name, 'result[1]: \"name\" field').to.eql('Фильмы');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/categories?from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category get 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get category\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('Концерты');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category get wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "1111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category delete wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category create 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('Кафешки');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Кафешки\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update category\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);",
+									"    pm.expect(jsonData.name, '\"name\" field').to.eql('updateКафешки');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"updateКафешки\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category update wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"updateФильмы\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category update no name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category update duplicate name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"updateКафешки\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "Event create wrong time",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Выступление Ф.Киркорова\",\n  \"category\": 1,\n  \"description\": \"Невероятно крутой российский певец поет ртом\",\n  \"eventDate\": \"2023-02-16 14:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": true,\n  \"participantLimit\": 1000,\n  \"requestModeration\": false,\n  \"title\": \"Киркоров поет\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event create wrong annotation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\": 1,\n  \"description\": \"Невероятно крутой российский певец поет ртом\",\n  \"eventDate\": \"2023-02-16 14:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": true,\n  \"participantLimit\": 1000,\n  \"requestModeration\": false,\n  \"title\": \"Киркоров поет\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event create wrong description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Выступление Ф.Киркорова\",\n  \"category\": 1,\n  \"eventDate\": \"2023-02-16 14:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": true,\n  \"participantLimit\": 1000,\n  \"requestModeration\": false,\n  \"title\": \"Киркоров поет\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event create wrong title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Выступление Ф.Киркорова\",\n  \"category\": 1,\n  \"description\": \"Невероятно крутой российский певец поет ртом\",\n  \"eventDate\": \"2023-02-16 14:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": true,\n  \"participantLimit\": 1000,\n  \"requestModeration\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Выступление Ф.Киркорова');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.createdOn, '\"createdOn\" field').to.eql(pm.environment.get('createdOn'));",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Невероятно крутой российский певец поет ртом');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.publishedOn, '\"publishedOn\" field').to.eql(pm.environment.get('createdOn'));",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PENDING');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Киркоров поет');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Выступление Ф.Киркорова\",\n  \"category\": 1,\n  \"description\": \"Невероятно крутой российский певец поет ртом\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": true,\n  \"participantLimit\": 2,\n  \"requestModeration\": false,\n  \"title\": \"Киркоров поет\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category delete existing event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/categories/:catId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								":catId"
+							],
+							"variable": [
+								{
+									"key": "catId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event wrong user update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Киркорова выступит Басков. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"title\": \"Слушаем музыку\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								},
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event user update wrong time",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Баскова выступит Нагиев. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"eventDate\": \"2023-02-11 23:10:05\",\n  \"stateAction\": \"CANCEL_REVIEW\",\n  \"title\": \"Слушаем хз что\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event user update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PENDING');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Киркорова выступит Басков. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"stateAction\": \"SEND_TO_REVIEW\",\n  \"title\": \"Слушаем музыку\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event admin publish",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stateAction\": \"PUBLISH_EVENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event user update published",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Баскова выступит Нагиев. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"stateAction\": \"CANCEL_REVIEW\",\n  \"title\": \"Слушаем хз что\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event user update wrong event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Баскова выступит Нагиев. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"stateAction\": \"CANCEL_REVIEW\",\n  \"title\": \"Слушаем хз что\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "eventId",
+									"value": "1111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event admin publish published",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Баскова выступит Нагиев. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"stateAction\": \"PUBLISH_EVENT\",\n  \"title\": \"Слушаем хз что\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event 2 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Выступление Собчак');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Она политик');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PENDING');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Собчак говорит');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Выступление Собчак\",\n  \"category\": 1,\n  \"description\": \"Она политик\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": true,\n  \"participantLimit\": 2,\n  \"requestModeration\": false,\n  \"title\": \"Собчак говорит\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event user update not his own",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Баскова выступит Нагиев. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"eventDate\": \"2023-02-11 23:10:05\",\n  \"stateAction\": \"CANCEL_REVIEW\",\n  \"title\": \"Слушаем хз что\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								},
+								{
+									"key": "eventId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event 3 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('StreetFood Competition');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(3);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('updateКафешки');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Ларьки стрифуда соревнуются между собой, кто больше впарит шавы');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-08-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(3);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user3');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(54.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(false);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PENDING');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('StreetFood Go!!');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"StreetFood Competition\",\n  \"category\": 3,\n  \"description\": \"Ларьки стрифуда соревнуются между собой, кто больше впарит шавы\",\n  \"eventDate\": \"2024-08-31 15:10:05\",\n  \"location\": {\n    \"lat\": 54.75,\n    \"lon\": 37.62\n  },\n  \"paid\": false,\n  \"participantLimit\": 2,\n  \"requestModeration\": false,\n  \"title\": \"StreetFood Go!!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event admin cancel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test create event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Выступление Собчак');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Она политик');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('REJECTED');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Собчак говорит');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stateAction\": \"REJECT_EVENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "eventId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event admin update wrong time event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Вместо Баскова выступит Нагиев. Тоже норм\",\n  \"description\": \"Басков тоже клевый чувак, певец ртом\",\n  \"eventDate\": \"2023-02-11 23:10:05\",\n  \"stateAction\": \"PUBLISH_EVENT\",\n  \"title\": \"Слушаем хз что\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get all by user 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all events of user 1\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length, 'categories count in total').to.eql(2);",
+									"",
+									"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].annotation, 'result[0]: \"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData[0].category.id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].category.name, 'result[0]: \"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData[0].confirmedRequests, 'result[0]: \"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData[0].description, 'result[0]: \"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData[0].eventDate, 'result[0]: \"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData[0].initiator.id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].initiator.name, 'result[0]: \"name\" field').to.eql('user');",
+									"    pm.expect(jsonData[0].location.lat, 'result[0]: \"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData[0].location.lon, 'result[0]: \"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData[0].paid, 'result[0]: \"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData[0].participantLimit, 'result[0]: \"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData[0].requestModeration, 'result[0]: \"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData[0].state, 'result[0]: \"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData[0].title, 'result[0]: \"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData[0].views, 'result[0]: \"views\" field').to.eql(0);",
+									"",
+									"    pm.expect(jsonData[1].id, 'result[1]: \"id\" field').to.eql(2);",
+									"    pm.expect(jsonData[1].annotation, 'result[1]: \"annotation\" field').to.eql('Выступление Собчак');",
+									"    pm.expect(jsonData[1].category.id, 'result[1]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[1].category.name, 'result[1]: \"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData[1].confirmedRequests, 'result[1]: \"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData[1].description, 'result[1]: \"description\" field').to.eql('Она политик');",
+									"    pm.expect(jsonData[1].eventDate, 'result[1]: \"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData[1].initiator.id, 'result[1]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[1].initiator.name, 'result[1]: \"name\" field').to.eql('user');",
+									"    pm.expect(jsonData[1].location.lat, 'result[1]: \"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData[1].location.lon, 'result[1]: \"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData[1].paid, 'result[1]: \"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData[1].participantLimit, 'result[1]: \"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData[1].requestModeration, 'result[1]: \"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData[1].state, 'result[1]: \"state\" field').to.eql('REJECTED');",
+									"    pm.expect(jsonData[1].title, 'result[1]: \"title\" field').to.eql('Собчак говорит');",
+									"    pm.expect(jsonData[1].views, 'result[1]: \"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 1 by user 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get category\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "eventId",
+									"value": "1111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get all by userId, categoryId, state",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all by userId, categoryId, state\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length, 'categories count in total').to.eql(3);",
+									"",
+									"    pm.expect(jsonData[0].id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].annotation, 'result[0]: \"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData[0].category.id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].category.name, 'result[0]: \"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData[0].confirmedRequests, 'result[0]: \"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData[0].description, 'result[0]: \"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData[0].eventDate, 'result[0]: \"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData[0].initiator.id, 'result[0]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[0].initiator.name, 'result[0]: \"name\" field').to.eql('user');",
+									"    pm.expect(jsonData[0].location.lat, 'result[0]: \"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData[0].location.lon, 'result[0]: \"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData[0].paid, 'result[0]: \"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData[0].participantLimit, 'result[0]: \"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData[0].requestModeration, 'result[0]: \"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData[0].state, 'result[0]: \"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData[0].title, 'result[0]: \"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData[0].views, 'result[0]: \"views\" field').to.eql(0);",
+									"",
+									"    pm.expect(jsonData[1].id, 'result[2]: \"id\" field').to.eql(3);",
+									"    pm.expect(jsonData[1].annotation, 'result[2]: \"annotation\" field').to.eql('StreetFood Competition');",
+									"    pm.expect(jsonData[1].category.id, 'result[2]: \"id\" field').to.eql(3);",
+									"    pm.expect(jsonData[1].category.name, 'result[2]: \"name\" field').to.eql('updateКафешки');",
+									"    pm.expect(jsonData[1].confirmedRequests, 'result[2]: \"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData[1].description, 'result[2]: \"description\" field').to.eql('Ларьки стрифуда соревнуются между собой, кто больше впарит шавы');",
+									"    pm.expect(jsonData[1].eventDate, 'result[2]: \"eventDate\" field').to.eql('2024-08-31 15:10:05');",
+									"    pm.expect(jsonData[1].initiator.id, 'result[2]: \"id\" field').to.eql(3);",
+									"    pm.expect(jsonData[1].initiator.name, 'result[2]: \"name\" field').to.eql('user3');",
+									"    pm.expect(jsonData[1].location.lat, 'result[2]: \"lat\" field').to.eql(54.75);",
+									"    pm.expect(jsonData[1].location.lon, 'result[2]: \"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData[1].paid, 'result[2]: \"paid\" field').to.eql(false);",
+									"    pm.expect(jsonData[1].participantLimit, 'result[2]: \"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData[1].requestModeration, 'result[2]: \"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData[1].state, 'result[2]: \"state\" field').to.eql('PENDING');",
+									"    pm.expect(jsonData[1].title, 'result[2]: \"title\" field').to.eql('StreetFood Go!!');",
+									"    pm.expect(jsonData[1].views, 'result[2]: \"views\" field').to.eql(0);",
+									"",
+									"    pm.expect(jsonData[2].id, 'result[1]: \"id\" field').to.eql(2);",
+									"    pm.expect(jsonData[2].annotation, 'result[1]: \"annotation\" field').to.eql('Выступление Собчак');",
+									"    pm.expect(jsonData[2].category.id, 'result[1]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[2].category.name, 'result[1]: \"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData[2].confirmedRequests, 'result[1]: \"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData[2].description, 'result[1]: \"description\" field').to.eql('Она политик');",
+									"    pm.expect(jsonData[2].eventDate, 'result[1]: \"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData[2].initiator.id, 'result[1]: \"id\" field').to.eql(1);",
+									"    pm.expect(jsonData[2].initiator.name, 'result[1]: \"name\" field').to.eql('user');",
+									"    pm.expect(jsonData[2].location.lat, 'result[1]: \"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData[2].location.lon, 'result[1]: \"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData[2].paid, 'result[1]: \"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData[2].participantLimit, 'result[1]: \"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData[2].requestModeration, 'result[1]: \"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData[2].state, 'result[1]: \"state\" field').to.eql('REJECTED');",
+									"    pm.expect(jsonData[2].title, 'result[1]: \"title\" field').to.eql('Собчак говорит');",
+									"    pm.expect(jsonData[2].views, 'result[1]: \"views\" field').to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events?userIds=1,3&states=PUBLISHED,CANCELED,PENDING&categories=1,3&rangeStart=2020-05-05 00:00:00&rangeEnd=2025-05-05 00:00:00&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events"
+							],
+							"query": [
+								{
+									"key": "userIds",
+									"value": "1,3"
+								},
+								{
+									"key": "states",
+									"value": "PUBLISHED,CANCELED,PENDING"
+								},
+								{
+									"key": "categories",
+									"value": "1,3"
+								},
+								{
+									"key": "rangeStart",
+									"value": "2020-05-05 00:00:00"
+								},
+								{
+									"key": "rangeEnd",
+									"value": "2025-05-05 00:00:00"
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 3 not public by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 1 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.annotation, '\"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData.category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.description, '\"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData.eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData.title, '\"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get all published",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all events paid not available\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.eql(1);",
+									"",
+									"    pm.expect(jsonData[0].id).to.eql(1);",
+									"    pm.expect(jsonData[0].annotation).to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData[0].category.id).to.eql(1);",
+									"    pm.expect(jsonData[0].category.name).to.eql('Концерты');",
+									"    pm.expect(jsonData[0].confirmedRequests).to.eql(0);",
+									"    pm.expect(jsonData[0].description).to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData[0].eventDate).to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData[0].initiator.id).to.eql(1);",
+									"    pm.expect(jsonData[0].initiator.name).to.eql('user');",
+									"    pm.expect(jsonData[0].location.lat).to.eql(55.75);",
+									"    pm.expect(jsonData[0].location.lon).to.eql(37.62);",
+									"    pm.expect(jsonData[0].paid).to.eql(true);",
+									"    pm.expect(jsonData[0].participantLimit).to.eql(2);",
+									"    pm.expect(jsonData[0].requestModeration).to.eql(false);",
+									"    pm.expect(jsonData[0].state).to.eql('PUBLISHED');",
+									"    pm.expect(jsonData[0].title).to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData[0].views).to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/events?text=аск&categories=1,3&paid=true&rangeStart=2020-05-05 00:00:00&rangeEnd=2025-05-05 00:00:00&onlyAvailable=false&sort=EVENT_DATE&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events"
+							],
+							"query": [
+								{
+									"key": "text",
+									"value": "аск"
+								},
+								{
+									"key": "categories",
+									"value": "1,3"
+								},
+								{
+									"key": "paid",
+									"value": "true"
+								},
+								{
+									"key": "rangeStart",
+									"value": "2020-05-05 00:00:00"
+								},
+								{
+									"key": "rangeEnd",
+									"value": "2025-05-05 00:00:00"
+								},
+								{
+									"key": "onlyAvailable",
+									"value": "false"
+								},
+								{
+									"key": "sort",
+									"value": "EVENT_DATE"
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event 4 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Пожирание бургеров на скорость\",\n  \"category\": 3,\n  \"description\": \"Жиробасы будут жрать еду. Кто первый двинет кони, тот и победил\",\n  \"eventDate\": \"2024-07-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": false,\n  \"participantLimit\": 4,\n  \"requestModeration\": true,\n  \"title\": \"Жопаче\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event 4 admin publish",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stateAction\": \"PUBLISH_EVENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event 5 create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annotation\": \"Выступление КлавыКоки\",\n  \"category\": 1,\n  \"description\": \"Поет голосом всяке\",\n  \"eventDate\": \"2024-10-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.75,\n    \"lon\": 37.62\n  },\n  \"paid\": false,\n  \"participantLimit\": 2,\n  \"requestModeration\": false,\n  \"title\": \"Норм\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event 5 admin publish",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.state, '\"state\" field').to.eql('PUBLISHED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stateAction\": \"PUBLISH_EVENT\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/events/:eventId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"events",
+								":eventId"
+							],
+							"variable": [
+								{
+									"key": "eventId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 4 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 4 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 4 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(3);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 5 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 5 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 5 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(3);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 5 by id views +1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test update event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.views, '\"views\" field').to.eql(4);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Request",
+			"item": [
+				{
+					"name": "Request create wrong event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=11111",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "11111"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create user in his own",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create not published event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "3"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create request\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.event).to.eql(1);",
+									"    pm.expect(jsonData.requester).to.eql(3);",
+									"    pm.expect(jsonData.status).to.eql('CONFIRMED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create duplicate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create request\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(2);",
+									"    pm.expect(jsonData.event).to.eql(1);",
+									"    pm.expect(jsonData.requester).to.eql(4);",
+									"    pm.expect(jsonData.status).to.eql('CONFIRMED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create limit exceed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request get all by user 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all requests of user 3\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.eql(1);",
+									"",
+									"    pm.expect(jsonData[0].id).to.eql(1);",
+									"    pm.expect(jsonData[0].event).to.eql(1);",
+									"    pm.expect(jsonData[0].requester).to.eql(3);",
+									"    pm.expect(jsonData[0].status).to.eql('CONFIRMED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request cancel wrong request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests/:requestId/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests",
+								":requestId",
+								"cancel"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								},
+								{
+									"key": "requestId",
+									"value": "11111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request cancel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test request cancel\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(2);",
+									"    pm.expect(jsonData.event).to.eql(1);",
+									"    pm.expect(jsonData.requester).to.eql(4);",
+									"    pm.expect(jsonData.status).to.eql('CANCELED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests/:requestId/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests",
+								":requestId",
+								"cancel"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								},
+								{
+									"key": "requestId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 3 after cancel  other user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create request\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(3);",
+									"    pm.expect(jsonData.event).to.eql(1);",
+									"    pm.expect(jsonData.requester).to.eql(5);",
+									"    pm.expect(jsonData.status).to.eql('CONFIRMED');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Request create 4\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(4);",
+									"    pm.expect(jsonData.event).to.eql(4);",
+									"    pm.expect(jsonData.requester).to.eql(1);",
+									"    pm.expect(jsonData.status).to.eql('PENDING');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Request create 5\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(5);",
+									"    pm.expect(jsonData.event).to.eql(4);",
+									"    pm.expect(jsonData.requester).to.eql(3);",
+									"    pm.expect(jsonData.status).to.eql('PENDING');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 6",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Request create 5\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('PENDING');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 7",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Request create 5\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('PENDING');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 8",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Request create 5\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('PENDING');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request create 9",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Request create 5\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('PENDING');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var created = moment();\r",
+									"pm.environment.set('created', created.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/requests?eventId=4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"requests"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request list moderate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Request list moderate\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.confirmedRequests.length).to.eql(4);",
+									"",
+									"    pm.expect(jsonData.confirmedRequests[0].event).to.eql(4);",
+									"    pm.expect(jsonData.confirmedRequests[0].id).to.eql(4);",
+									"    pm.expect(jsonData.confirmedRequests[0].requester).to.eql(1);",
+									"    pm.expect(jsonData.confirmedRequests[0].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData.confirmedRequests[1].event).to.eql(4);",
+									"    pm.expect(jsonData.confirmedRequests[1].id).to.eql(5);",
+									"    pm.expect(jsonData.confirmedRequests[1].requester).to.eql(3);",
+									"    pm.expect(jsonData.confirmedRequests[1].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData.confirmedRequests[2].event).to.eql(4);",
+									"    pm.expect(jsonData.confirmedRequests[2].id).to.eql(6);",
+									"    pm.expect(jsonData.confirmedRequests[2].requester).to.eql(5);",
+									"    pm.expect(jsonData.confirmedRequests[2].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData.confirmedRequests[3].event).to.eql(4);",
+									"    pm.expect(jsonData.confirmedRequests[3].id).to.eql(7);",
+									"    pm.expect(jsonData.confirmedRequests[3].requester).to.eql(6);",
+									"    pm.expect(jsonData.confirmedRequests[3].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData.rejectedRequests.length).to.eql(1);",
+									"",
+									"    pm.expect(jsonData.rejectedRequests[0].event).to.eql(4);",
+									"    pm.expect(jsonData.rejectedRequests[0].id).to.eql(8);",
+									"    pm.expect(jsonData.rejectedRequests[0].requester).to.eql(7);",
+									"    pm.expect(jsonData.rejectedRequests[0].status).to.eql('REJECTED');",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestIds\": [\r\n    4,\r\n    5,\r\n    6,\r\n    7,\r\n    8\r\n  ],\r\n  \"status\": \"CONFIRMED\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId/requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId",
+								"requests"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								},
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request list moderate limit exceeded",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"\r",
+									"var createdOn = moment();\r",
+									"pm.environment.set('createdOn', createdOn.format('YYYY-MM-DD HH:mm:ss'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"requestIds\": [\r\n    9\r\n  ],\r\n  \"status\": \"CONFIRMED\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId/requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId",
+								"requests"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								},
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event get 4 by id confirmed requests +4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get event\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.confirmedRequests).to.eql(4);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/:id\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":id\n"
+							],
+							"variable": [
+								{
+									"key": "id\n",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request get all by user 4 event 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Request list moderate\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.eql(6);",
+									"",
+									"    pm.expect(jsonData[0].event).to.eql(4);",
+									"    pm.expect(jsonData[0].id).to.eql(9);",
+									"    pm.expect(jsonData[0].requester).to.eql(8);",
+									"    pm.expect(jsonData[0].status).to.eql('PENDING');",
+									"",
+									"    pm.expect(jsonData[1].event).to.eql(4);",
+									"    pm.expect(jsonData[1].id).to.eql(5);",
+									"    pm.expect(jsonData[1].requester).to.eql(3);",
+									"    pm.expect(jsonData[1].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData[2].event).to.eql(4);",
+									"    pm.expect(jsonData[2].id).to.eql(4);",
+									"    pm.expect(jsonData[2].requester).to.eql(1);",
+									"    pm.expect(jsonData[2].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData[3].event).to.eql(4);",
+									"    pm.expect(jsonData[3].id).to.eql(6);",
+									"    pm.expect(jsonData[3].requester).to.eql(5);",
+									"    pm.expect(jsonData[3].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData[4].event).to.eql(4);",
+									"    pm.expect(jsonData[4].id).to.eql(7);",
+									"    pm.expect(jsonData[4].requester).to.eql(6);",
+									"    pm.expect(jsonData[4].status).to.eql('CONFIRMED');",
+									"",
+									"    pm.expect(jsonData[5].event).to.eql(4);",
+									"    pm.expect(jsonData[5].id).to.eql(8);",
+									"    pm.expect(jsonData[5].requester).to.eql(7);",
+									"    pm.expect(jsonData[5].status).to.eql('REJECTED');",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/:userId/events/:eventId/requests",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"events",
+								":eventId",
+								"requests"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								},
+								{
+									"key": "eventId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Compilation",
+			"item": [
+				{
+					"name": "Compilation create 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.pinned).to.eql(false);",
+									"    pm.expect(jsonData.events.length).to.eql(2);",
+									"",
+									"    pm.expect(jsonData.events[0].id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.events[0].annotation, '\"annotation\" field').to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"    pm.expect(jsonData.events[0].category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.events[0].category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.events[0].confirmedRequests, '\"confirmedRequests\" field').to.eql(2);",
+									"    pm.expect(jsonData.events[0].description, '\"description\" field').to.eql('Басков тоже клевый чувак, певец ртом');",
+									"    pm.expect(jsonData.events[0].eventDate, '\"eventDate\" field').to.eql('2024-12-31 15:10:05');",
+									"    pm.expect(jsonData.events[0].initiator.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.events[0].initiator.name, '\"name\" field').to.eql('user');",
+									"    pm.expect(jsonData.events[0].location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.events[0].location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.events[0].paid, '\"paid\" field').to.eql(true);",
+									"    pm.expect(jsonData.events[0].participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.events[0].requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.events[0].state, '\"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData.events[0].title, '\"title\" field').to.eql('Слушаем музыку');",
+									"    pm.expect(jsonData.events[0].views, '\"views\" field').to.eql(1);",
+									"",
+									"    pm.expect(jsonData.events[1].id, '\"id\" field').to.eql(5);",
+									"    pm.expect(jsonData.events[1].annotation, '\"annotation\" field').to.eql('Выступление КлавыКоки');",
+									"    pm.expect(jsonData.events[1].category.id, '\"id\" field').to.eql(1);",
+									"    pm.expect(jsonData.events[1].category.name, '\"name\" field').to.eql('Концерты');",
+									"    pm.expect(jsonData.events[1].confirmedRequests, '\"confirmedRequests\" field').to.eql(0);",
+									"    pm.expect(jsonData.events[1].description, '\"description\" field').to.eql('Поет голосом всяке');",
+									"    pm.expect(jsonData.events[1].eventDate, '\"eventDate\" field').to.eql('2024-10-31 15:10:05');",
+									"    pm.expect(jsonData.events[1].initiator.id, '\"id\" field').to.eql(4);",
+									"    pm.expect(jsonData.events[1].initiator.name, '\"name\" field').to.eql('user4');",
+									"    pm.expect(jsonData.events[1].location.lat, '\"lat\" field').to.eql(55.75);",
+									"    pm.expect(jsonData.events[1].location.lon, '\"lon\" field').to.eql(37.62);",
+									"    pm.expect(jsonData.events[1].paid, '\"paid\" field').to.eql(false);",
+									"    pm.expect(jsonData.events[1].participantLimit, '\"participantLimit\" field').to.eql(2);",
+									"    pm.expect(jsonData.events[1].requestModeration, '\"requestModeration\" field').to.eql(false);",
+									"    pm.expect(jsonData.events[1].state, '\"state\" field').to.eql('PUBLISHED');",
+									"    pm.expect(jsonData.events[1].title, '\"title\" field').to.eql('Норм');",
+									"    pm.expect(jsonData.events[1].views, '\"views\" field').to.eql(4);",
+									"",
+									"    pm.expect(jsonData.title).to.eql('Летние концерты');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"events\": [\n    1,\n    5\n  ],\n  \"pinned\": false,\n  \"title\": \"Летние концерты\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation create 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(2);",
+									"    pm.expect(jsonData.pinned).to.eql(false);",
+									"    pm.expect(jsonData.events.length).to.eql(2);",
+									"",
+									"    pm.expect(jsonData.events[0].id).to.eql(1);",
+									"    pm.expect(jsonData.events[0].annotation).to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"",
+									"    pm.expect(jsonData.events[1].id).to.eql(4);",
+									"    pm.expect(jsonData.events[1].annotation).to.eql('Пожирание бургеров на скорость');",
+									"",
+									"    pm.expect(jsonData.title).to.eql('Разное');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"events\": [\n    1,\n    4\n  ],\n  \"pinned\": false,\n  \"title\": \"Разное\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation update 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(2);",
+									"    pm.expect(jsonData.pinned).to.eql(true);",
+									"    pm.expect(jsonData.events.length).to.eql(3);",
+									"",
+									"    pm.expect(jsonData.events[0].id).to.eql(4);",
+									"    pm.expect(jsonData.events[0].annotation).to.eql('Пожирание бургеров на скорость');",
+									"",
+									"    pm.expect(jsonData.events[1].id).to.eql(1);",
+									"    pm.expect(jsonData.events[1].annotation).to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"",
+									"    pm.expect(jsonData.events[2].id).to.eql(5);",
+									"    pm.expect(jsonData.events[2].annotation).to.eql('Выступление КлавыКоки');",
+									"",
+									"    pm.expect(jsonData.title).to.eql('Необычные фотозоны');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"events\": [\n      4,\n      1,\n      5\n  ],\n  \"pinned\": true,\n  \"title\": \"Необычные фотозоны\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations/:compId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations",
+								":compId"
+							],
+							"variable": [
+								{
+									"key": "compId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation update 2 events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(2);",
+									"    pm.expect(jsonData.pinned).to.eql(true);",
+									"    pm.expect(jsonData.events.length).to.eql(0);",
+									"",
+									"    pm.expect(jsonData.title).to.eql('Необычные фотозоны');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"events\": [],\n  \"pinned\": true,\n  \"title\": \"Необычные фотозоны\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations/:compId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations",
+								":compId"
+							],
+							"variable": [
+								{
+									"key": "compId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation update 2 title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test create user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(2);",
+									"    pm.expect(jsonData.pinned).to.eql(true);",
+									"    pm.expect(jsonData.events.length).to.eql(0);",
+									"",
+									"    pm.expect(jsonData.title).to.eql('Updated фотозоны');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated фотозоны\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations/:compId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations",
+								":compId"
+							],
+							"variable": [
+								{
+									"key": "compId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation update wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated фотозоны\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations/:compId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations",
+								":compId"
+							],
+							"variable": [
+								{
+									"key": "compId",
+									"value": "111111"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation get all pinned false",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.eql(1);",
+									"",
+									"    pm.expect(jsonData[0].id).to.eql(1);",
+									"    pm.expect(jsonData[0].events.length).to.eql(2);",
+									"",
+									"    pm.expect(jsonData[0].events[0].id).to.eql(1);",
+									"    pm.expect(jsonData[0].events[0].annotation).to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"",
+									"    pm.expect(jsonData[0].events[1].id).to.eql(5);",
+									"    pm.expect(jsonData[0].events[1].annotation).to.eql('Выступление КлавыКоки');",
+									"",
+									"    pm.expect(jsonData[0].pinned).to.eql(false);",
+									"    pm.expect(jsonData[0].title).to.eql('Летние концерты');",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/compilations?pinned=false&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"compilations"
+							],
+							"query": [
+								{
+									"key": "pinned",
+									"value": "false"
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation get all pinned true",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.eql(1);",
+									"",
+									"    pm.expect(jsonData[0].id).to.eql(2);",
+									"    pm.expect(jsonData[0].events.length).to.eql(0);",
+									"",
+									"    pm.expect(jsonData[0].pinned).to.eql(true);",
+									"    pm.expect(jsonData[0].title).to.eql('Updated фотозоны');",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/compilations?pinned=true&from&size",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"compilations"
+							],
+							"query": [
+								{
+									"key": "pinned",
+									"value": "true"
+								},
+								{
+									"key": "from",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+									"});",
+									"pm.test(\"Test get all user\", function () {",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.events.length).to.eql(2);",
+									"",
+									"    pm.expect(jsonData.events[0].id).to.eql(1);",
+									"    pm.expect(jsonData.events[0].annotation).to.eql('Вместо Киркорова выступит Басков. Тоже норм');",
+									"",
+									"    pm.expect(jsonData.events[1].id).to.eql(5);",
+									"    pm.expect(jsonData.events[1].annotation).to.eql('Выступление КлавыКоки');",
+									"",
+									"    pm.expect(jsonData.pinned).to.eql(false);",
+									"    pm.expect(jsonData.title).to.eql('Летние концерты');",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/compilations/:compId\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"compilations",
+								":compId\n"
+							],
+							"variable": [
+								{
+									"key": "compId\n",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation delete 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/compilations/:compId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"compilations",
+								":compId"
+							],
+							"variable": [
+								{
+									"key": "compId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compilation get wrong",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/compilations/:compId\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"compilations",
+								":compId\n"
+							],
+							"variable": [
+								{
+									"key": "compId\n",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var moment = require('moment');",
+					"",
+					"var time = moment();",
+					"pm.environment.set('time', time.format('YYYY-MM-DD HH:mm:ss'));"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "time",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

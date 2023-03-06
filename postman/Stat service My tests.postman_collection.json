@@ -1,0 +1,692 @@
+{
+	"info": {
+		"_postman_id": "9d428b3f-2477-4dc7-8c05-8ee5a1ef1f53",
+		"name": "Stat service My tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25925900"
+	},
+	"item": [
+		{
+			"name": "getStat connection Main & Stat servers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get stat with uniq id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(4);\r",
+							"\r",
+							"    pm.expect(jsonData[0].app).to.eql('localhost');\r",
+							"    pm.expect(jsonData[0].uri).to.eql('/events/4');\r",
+							"    pm.expect(jsonData[0].hits).to.eql(4);\r",
+							"\r",
+							"    pm.expect(jsonData[1].app).to.eql('localhost');\r",
+							"    pm.expect(jsonData[1].uri).to.eql('/events/5');\r",
+							"    pm.expect(jsonData[1].hits).to.eql(4);\r",
+							"\r",
+							"    pm.expect(jsonData[2].app).to.eql('localhost');\r",
+							"    pm.expect(jsonData[2].uri).to.eql('/events/1');\r",
+							"    pm.expect(jsonData[2].hits).to.eql(2);\r",
+							"\r",
+							"    pm.expect(jsonData[3].app).to.eql('localhost');\r",
+							"    pm.expect(jsonData[3].uri).to.eql('/events/3');\r",
+							"    pm.expect(jsonData[3].hits).to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2027-05-05 00:00:00&uris=/events/1,/events/2,/events/3,/events/4,/events/5,/events/6&unique=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stats"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2020-05-05 00:00:00"
+						},
+						{
+							"key": "end",
+							"value": "2027-05-05 00:00:00"
+						},
+						{
+							"key": "uris",
+							"value": "/events/1,/events/2,/events/3,/events/4,/events/5,/events/6"
+						},
+						{
+							"key": "unique",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit Invalid timestamp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit Invalid ip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit Invalid uri",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit Invalid app",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"     pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Test save hit\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id, '\"id\" field').to.eql(1);",
+							"    pm.expect(jsonData.app, '\"app\" field').to.eql('ewm-main-service');",
+							"    pm.expect(jsonData.uri, '\"uri\" field').to.eql('/events/1');",
+							"    pm.expect(jsonData.ip, '\"ip\" field').to.eql('192.163.0.1');",
+							"    pm.expect(jsonData.timestamp, '\"timestamp\" field').to.eql('2022-09-06 11:00:23');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"     pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Test save hit\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id, '\"id\" field').to.eql(2);",
+							"    pm.expect(jsonData.app, '\"app\" field').to.eql('ewm-main-service');",
+							"    pm.expect(jsonData.uri, '\"uri\" field').to.eql('/events/1');",
+							"    pm.expect(jsonData.ip, '\"ip\" field').to.eql('192.163.0.1');",
+							"    pm.expect(jsonData.timestamp, '\"timestamp\" field').to.eql('2022-09-07 11:00:23');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-07 11:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"     pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Test save hit\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id, '\"id\" field').to.eql(3);",
+							"    pm.expect(jsonData.app, '\"app\" field').to.eql('AY-main-service');",
+							"    pm.expect(jsonData.uri, '\"uri\" field').to.eql('/events/2');",
+							"    pm.expect(jsonData.ip, '\"ip\" field').to.eql('192.163.0.1');",
+							"    pm.expect(jsonData.timestamp, '\"timestamp\" field').to.eql('2022-09-07 15:00:23');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"AY-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-07 15:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"     pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Test save hit\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id, '\"id\" field').to.eql(4);",
+							"    pm.expect(jsonData.app, '\"app\" field').to.eql('AY-main-service');",
+							"    pm.expect(jsonData.uri, '\"uri\" field').to.eql('/events/3');",
+							"    pm.expect(jsonData.ip, '\"ip\" field').to.eql('192.163.0.1');",
+							"    pm.expect(jsonData.timestamp, '\"timestamp\" field').to.eql('2022-09-08 13:00:23');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"AY-main-service\",\n  \"uri\": \"/events/3\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-08 13:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveHit 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"     pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Test save hit\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id, '\"id\" field').to.eql(5);",
+							"    pm.expect(jsonData.app, '\"app\" field').to.eql('AY-main-service');",
+							"    pm.expect(jsonData.uri, '\"uri\" field').to.eql('/events/3');",
+							"    pm.expect(jsonData.ip, '\"ip\" field').to.eql('193.163.0.1');",
+							"    pm.expect(jsonData.timestamp, '\"timestamp\" field').to.eql('2022-09-08 16:00:23');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app\": \"AY-main-service\",\n  \"uri\": \"/events/3\",\n  \"ip\": \"193.163.0.1\",\n  \"timestamp\": \"2022-09-08 16:00:23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/hit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"hit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStatNotUniq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get stat with not uniq id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'users count in total').to.eql(3);\r",
+							"\r",
+							"    pm.expect(jsonData[0].app, 'result[0]: \"app\" field').to.eql('ewm-main-service');\r",
+							"    pm.expect(jsonData[0].uri, 'result[0]: \"uri\" field').to.eql('/events/1');\r",
+							"    pm.expect(jsonData[0].hits, 'result[0]: \"hits\" field').to.eql(2);\r",
+							"\r",
+							"    pm.expect(jsonData[1].app, 'result[1]: \"app\" field').to.eql('AY-main-service');\r",
+							"    pm.expect(jsonData[1].uri, 'result[1]: \"uri\" field').to.eql('/events/3');\r",
+							"    pm.expect(jsonData[1].hits, 'result[1]: \"hits\" field').to.eql(2);\r",
+							"\r",
+							"    pm.expect(jsonData[2].app, 'result[2]: \"app\" field').to.eql('AY-main-service');\r",
+							"    pm.expect(jsonData[2].uri, 'result[2]: \"uri\" field').to.eql('/events/2');\r",
+							"    pm.expect(jsonData[2].hits, 'result[2]: \"hits\" field').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2027-05-05 00:00:00&uris=/events/1,/events/2,/events/3,/events/4,/events/5,/events/6",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stats"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2020-05-05 00:00:00"
+						},
+						{
+							"key": "end",
+							"value": "2027-05-05 00:00:00"
+						},
+						{
+							"key": "uris",
+							"value": "/events/1,/events/2,/events/3,/events/4,/events/5,/events/6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStatUniq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"pm.test(\"Test get stat with uniq id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length, 'users count in total').to.eql(3);\r",
+							"\r",
+							"    pm.expect(jsonData[0].app, 'result[0]: \"app\" field').to.eql('AY-main-service');\r",
+							"    pm.expect(jsonData[0].uri, 'result[0]: \"uri\" field').to.eql('/events/3');\r",
+							"    pm.expect(jsonData[0].hits, 'result[0]: \"hits\" field').to.eql(2);\r",
+							"\r",
+							"    pm.expect(jsonData[1].app, 'result[1]: \"app\" field').to.eql('ewm-main-service');\r",
+							"    pm.expect(jsonData[1].uri, 'result[1]: \"uri\" field').to.eql('/events/1');\r",
+							"    pm.expect(jsonData[1].hits, 'result[1]: \"hits\" field').to.eql(1);\r",
+							"\r",
+							"    pm.expect(jsonData[2].app, 'result[2]: \"app\" field').to.eql('AY-main-service');\r",
+							"    pm.expect(jsonData[2].uri, 'result[2]: \"uri\" field').to.eql('/events/2');\r",
+							"    pm.expect(jsonData[2].hits, 'result[2]: \"hits\" field').to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/stats?start=2020-05-05 00:00:00&end=2027-05-05 00:00:00&uris=/events/1,/events/2,/events/3,/events/4,/events/5,/events/6&unique=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stats"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2020-05-05 00:00:00"
+						},
+						{
+							"key": "end",
+							"value": "2027-05-05 00:00:00"
+						},
+						{
+							"key": "uris",
+							"value": "/events/1,/events/2,/events/3,/events/4,/events/5,/events/6"
+						},
+						{
+							"key": "unique",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:9090",
+			"type": "string"
+		}
+	]
+}
