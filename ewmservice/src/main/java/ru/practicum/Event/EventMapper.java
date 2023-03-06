@@ -4,14 +4,17 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.practicum.Category.CategoryDto;
 import ru.practicum.User.UserDto;
+import ru.practicum.Comment.CommentShortDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EventMapper {
 
-    public static EventFullDto toEventFullDto(Event event, CategoryDto categoryDto, UserDto userDto) {
+    public static EventFullDto toEventFullDto(Event event, CategoryDto categoryDto, UserDto userDto,
+                                              List<CommentShortDto> comments) {
         EventFullDto eventFullDto = new EventFullDto();
         eventFullDto.setId(event.getId());
         eventFullDto.setAnnotation(event.getAnnotation());
@@ -29,6 +32,7 @@ public final class EventMapper {
         eventFullDto.setState(event.getState());
         eventFullDto.setTitle(event.getTitle());
         eventFullDto.setViews(event.getViews());
+        eventFullDto.setComments(comments);
         return eventFullDto;
     }
 
